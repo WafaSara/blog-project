@@ -3,7 +3,7 @@
 namespace Blog;
 
 return array(
-	// Doctrine
+    // Doctrine
     'doctrine' => array(
         'driver' => array(
             __NAMESPACE__ . '_driver' => array(

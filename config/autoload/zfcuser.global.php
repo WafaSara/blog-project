@@ -24,11 +24,6 @@ $settings = array(
     'user_entity_class' => 'User\src\Entity\MyUser',
 
     /**
-     * enable to extend default User class
-     */
-    'EnableDefaultEntities' => false, 
-
-    /**
      * Enable registration
      *
      * Allows users to register through the website.

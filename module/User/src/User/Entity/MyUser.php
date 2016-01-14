@@ -3,7 +3,12 @@
 namespace User\Entity;
 
 use ZfcUser\Entity\User;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity 
+ * @ORM\Table(name="my_user")
+ */
 class MyUser extends User
 {
     
@@ -18,6 +23,7 @@ class MyUser extends User
      * @ORM\Column(name="created_at", type="datetime")
      */
     protected $createdAt;
+
 
     /**
      * get creation date
