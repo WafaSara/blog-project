@@ -4,37 +4,40 @@ namespace Blog\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
  
-/** @ORM\Entity */
+/** 
+ * @ORM\Entity
+ * @ORM\Table(name="category")
+ */
 class Category
 {
 	/**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="cat_id",type="integer")
 	 * @var int id
 	 */
 	private $id; 
 
 	/**
-	 * @ORM\Column(type="string",unique=true) 
+	 * @ORM\Column(name="cat_label",type="string",unique=true) 
 	 * @var string label
 	 */
 	private $label; 
 
 	/**
-	 * @ORM\Column(name="created_at", type="datetime") 
+	 * @ORM\Column(name="cat_created_at", type="datetime") 
 	 * @var string created at date
 	 */
 	private $createdAt;
 
 	/**
-	 * @ORM\Column(name="updated_at", type="datetime")
+	 * @ORM\Column(name="cat_updated_at", type="datetime")
 	 * @var string updated at date
 	 */
 	private $updatedAt; 
 
 	/**
-	 * @ORM\Column(type="boolean") 
+	 * @ORM\Column(name="cat_deleted",type="boolean") 
 	 * @var boolean deleted state
 	 */
 	private $deleted; 
