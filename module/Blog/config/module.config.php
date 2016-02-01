@@ -4,28 +4,6 @@ namespace Blog;
 
 return array(
     'router' => array(
-<<<<<<< HEAD
-      'routes' => array(
-      'blog' => array(
-          'type' => 'literal',
-              'options' => array(
-                      'route' => '/blog',
-                      'defaults' => array(
-                      'controller' => 'blog-index',
-                      'action' => 'index',
-                  ),
-              ),
-          ),
-      ),
-    ),
-
-    'controllers' => array(
-      'invokables' => array(
-          'blog-index' => 'Blog\Controller\IndexController'
-          ),
-      ),
-
-=======
         'routes' => array(
             'home' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
@@ -74,14 +52,14 @@ return array(
             'Blog\Controller\Index' => Controller\IndexController::class
         ),
     ),
->>>>>>> 967a39e830089fdc1c9fce3a738fbbb2b8f647c2
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
-<<<<<<< HEAD
+
         'layout'                   => 'layout/layout',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
@@ -97,18 +75,6 @@ return array(
         ),
      ),
 
-=======
-        'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/blog/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
-        ),
-        'template_path_stack' => array(
-            __DIR__ . '/../view',
-        ),
-    ),
->>>>>>> 967a39e830089fdc1c9fce3a738fbbb2b8f647c2
     // Doctrine
     'doctrine' => array(
         'driver' => array(
