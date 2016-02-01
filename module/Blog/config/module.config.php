@@ -52,14 +52,12 @@ return array(
             'Blog\Controller\Index' => Controller\IndexController::class
         ),
     ),
-
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
         'doctype'                  => 'HTML5',
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
-
         'layout'                   => 'layout/layout',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
@@ -72,9 +70,8 @@ return array(
          // to ensure that they are not overwritten -- or simply omit the key!
          'template_path_stack' => array(
          'blog' => __DIR__ . '/../view',
-        ),
+          ),
      ),
-
     // Doctrine
     'doctrine' => array(
         'driver' => array(
