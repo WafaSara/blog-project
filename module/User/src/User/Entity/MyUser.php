@@ -24,6 +24,11 @@ class MyUser extends User
      */
     protected $createdAt;
 
+     public function __construct()
+    {
+        $this->createdAt=new \DateTime();
+        $this->updatedAt=new \DateTime();
+    }
 
     /**
      * get creation date
