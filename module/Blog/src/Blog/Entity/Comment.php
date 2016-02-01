@@ -4,7 +4,10 @@ namespace Blog\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/** @ORM\Entity */
+/** 
+ * @ORM\Entity
+ * @ORM\Table(name="comment")
+ */
 class Comment
 {
 	
@@ -16,37 +19,37 @@ class Comment
 	/**
 	 * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(type="integer")
+     * @ORM\Column(name="com_id",type="integer")
 	 * @var int id
 	 */
 	private $id; 
 
 	/**
-	 * @ORM\Column(name="user_email", type="string")
+	 * @ORM\Column(name="com_user_email", type="string")
 	 * @var string user email
 	 */
 	private $userEmail; 
 
 	/**
-	 * @ORM\Column(type="text") 
+	 * @ORM\Column(name="com_comment",type="text") 
 	 * @var string comment content
 	 */
 	private $comment; 
 
 	/**
-	 * @ORM\Column(name="created_at", type="datetime") 
+	 * @ORM\Column(name="com_created_at", type="datetime") 
 	 * @var string created at date
 	 */
 	private $createdAt; 
 
 	/**
-	 * @ORM\Column(name="updated_at", type="datetime") 
+	 * @ORM\Column(name="com_updated_at", type="datetime") 
 	 * @var string updated at date 
 	 */
 	private $updatedAt; 
 
 	/**
-	 * @ORM\Column(type="boolean")
+	 * @ORM\Column(name="com_deleted",type="boolean")
 	 * @var boolean deleted state
 	 */
 	private $deleted; 
