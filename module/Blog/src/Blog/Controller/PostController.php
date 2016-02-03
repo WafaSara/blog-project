@@ -12,9 +12,8 @@ class PostController extends AbstractActionController
      * listin of all the posts
      * @return array
      */
-    public function indexAction()
+    public function listAction()
     {
-        return new ViewModel();
     }
 
     /**

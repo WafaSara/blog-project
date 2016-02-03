@@ -9,12 +9,11 @@ class CommentController extends AbstractActionController
 {
 
     /**
-     * listin of all the comments
+     * listing of all the comments
      * @return array
      */
-    public function indexAction()
+    public function listAction()
     {
-        return new ViewModel();
     }
 
     /**
@@ -38,7 +37,7 @@ class CommentController extends AbstractActionController
     }
 
     /**
-     * delete a comment by id 
+     * delete a comment by id
      * @param  int $id
      * @return
      */

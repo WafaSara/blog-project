@@ -9,12 +9,11 @@ class CategoryController extends AbstractActionController
 {
 
     /**
-     * listin of all the categories
+     * listing of all the categories
      * @return array
      */
-    public function indexAction()
+    public function listAction()
     {
-        return new ViewModel();
     }
 
     /**
@@ -38,7 +37,7 @@ class CategoryController extends AbstractActionController
     }
 
     /**
-     * delete a category by id 
+     * delete a category by id
      * @param  int $id
      * @return
      */

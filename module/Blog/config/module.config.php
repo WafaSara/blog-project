@@ -5,28 +5,23 @@ namespace Blog;
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/',
-                    'defaults' => array(
-                        'controller' => 'Blog\Controller\Index',
-                        'action'     => 'index',
-                    ),
-                ),
+          'home' => array(
+              'type' => 'Literal',
+              'options' => array(
+                  'route' => '/',
+                  'defaults' => array(
+                      'controller' => 'Index',
+                      'action'     => 'index',
+                  ),
+              ),
             ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'blog' => array(
-                'type'    => 'Literal',
+            'dashboard' => array(
+                'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route' => '/dashboard',
                     'defaults' => array(
-                        '__NAMESPACE__' => 'Blog\Controller',
-                        'controller'    => 'Index',
-                        'action'        => 'index',
+                        'controller' => 'Dashboard',
+                        'action'     => 'index',
                     ),
                 ),
                 'may_terminate' => true,
@@ -43,15 +38,21 @@ return array(
                             ),
                         ),
                     ),
-                ),
-            ),
+              ),
+           ),
         ),
-    ),
+     ),
+
     'controllers' => array(
         'invokables' => array(
-            'Blog\Controller\Index' => Controller\IndexController::class
+            'Comment'   => Controller\CommentController  ::class,
+            'Post'      => Controller\PostController     ::class,
+            'Category'  => Controller\CategoryController ::class,
+            'Dashboard' => Controller\DashboardController ::class,
+            'Index' => Controller\IndexController ::class
         ),
     ),
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,
@@ -59,9 +60,10 @@ return array(
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'layout'                   => 'layout/layout',
+
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'blog/index/index'        => __DIR__ . '/../view/blog/index/index.phtml',
+            'dashboard/index'         => __DIR__ . '/../view/blog/dashboard/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),
@@ -69,7 +71,7 @@ return array(
          // of the current module. Make sure your keys differ between modules
          // to ensure that they are not overwritten -- or simply omit the key!
          'template_path_stack' => array(
-         'blog' => __DIR__ . '/../view',
+           'blog' => __DIR__ . '/../view',
           ),
      ),
     // Doctrine
