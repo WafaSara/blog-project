@@ -26,7 +26,7 @@ class Module
      * @param  ModuleManager
      * @return [type]
      */
-   /* public function init(ModuleManager $moduleManager)
+    public function init(ModuleManager $moduleManager)
     {
         $moduleManager->getEventManager()->getSharedManager()->attach(__NAMESPACE__,
         'dispatch', function($e) {
@@ -40,7 +40,7 @@ class Module
         $controller->layout('layout/user');
         }, 100);
     }
-*/
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';

@@ -92,6 +92,11 @@
               <!-- <li class="mdl-menu__item">hello@example.com</li>
               <li class="mdl-menu__item">info@example.com</li> -->
               <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
+              
+              <li class="mdl-menu__item"> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/changepassword') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Changer de mot de passe</a></li>
+              <li class="mdl-menu__item"> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/changeemail') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Changer d'adresse mail</a></li>
+              <li class="mdl-menu__item"> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/logout') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Déconnexion</a></li>
+
             </ul>
           </div>
         </header>

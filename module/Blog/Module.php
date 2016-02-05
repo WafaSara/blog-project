@@ -14,7 +14,7 @@ class Module
  
     public function onDispatchError(MvcEvent $e) {
       $viewModel = $e->getViewModel();
-      $viewModel->setTemplate('layout/error');
+      $viewModel->setTemplate('layout/layout-error');
     }
 
     public function getConfig()
