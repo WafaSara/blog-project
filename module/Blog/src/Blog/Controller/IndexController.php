@@ -20,6 +20,16 @@ class  IndexController extends AbstractActionController
 
   public function indexAction()
   {
+    $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+  	// on récupère les 10 posts plus récent
+    $posts = $em->getRepository('Blog\Entity\Post')->getLastPosts();
+    
+    return new ViewModel(array('posts' => $posts));
+  }
+
+  public function contactAction()
+  {
     return new ViewModel();
   }
 }

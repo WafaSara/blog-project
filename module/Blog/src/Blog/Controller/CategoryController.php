@@ -16,14 +16,23 @@ class CategoryController extends AbstractActionController
     {
     }
 
-    /**
-     * get a category by id
-     * @param  int $id id
-     * @return
-     */
-    public function showAction($id)
+    public function showAction()
     {
-      # code...
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        $slug = $this->params('slug');
+
+        $category = $em->getRepository('Blog\Entity\Category')->findOneBySlug($slug);
+        // Le slug passé en param est erroné on affiche une error 404
+        if($category == null)
+        {
+            return $this->redirect()->toRoute('home'); 
+        }
+
+        // on récupère les posts du plus récent au plus ancien en fonction de la category
+        $posts = $em->getRepository('Blog\Entity\Post')->getByCategory($category);
+        
+        return new ViewModel(array('posts' => $posts));
     }
 
     /**

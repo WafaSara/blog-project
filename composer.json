@@ -15,6 +15,7 @@
         "doctrine/doctrine-orm-module": "0.*",
         "zendframework/zend-developer-tools": "dev-master",
         "zendframework/zftool": "dev-master",
-        "goalio/goalio-mailservice": "1.*"
+        "goalio/goalio-mailservice": "1.*",
+        "cocur/slugify": "^1.4"
     }
 }

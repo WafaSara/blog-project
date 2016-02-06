@@ -121,11 +121,11 @@ return array(
         'doctype'                  => 'HTML5',
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
-        'layout/user' => __DIR__ . '/layout/user',
+        'layout'                   => 'layout/user',
         'template_map' => array(
             'layout/user'           => __DIR__ . '/../view/layout/layout.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'error/404'             => __DIR__ . '/../view/error/404.phtml',
+            'error/index'           => __DIR__ . '/../view/error/index.phtml',
         ),
          // The following adds an entry pointing to the view directory
          // of the current module. Make sure your keys differ between modules
@@ -155,9 +155,8 @@ return array(
             // telling ZfcUserDoctrineORM to skip the entities it defines
             'enable_default_entities' => false,
             'enable_registration' => false,
-            'login_redirect_route' => 'home',
+            'login_redirect_route' => 'dashboard',
             'logout_redirect_route' => 'zfcuser/login',
     ),
-
 
 );

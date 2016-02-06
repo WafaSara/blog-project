@@ -15,8 +15,10 @@ return array(
         'GoalioMailService',
         'ZfcUserDoctrineORM',
         'ZendDeveloperTools',
+        'Cocur\Slugify\Bridge\ZF2',
         'User',
         'Blog',
+        'Admin'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

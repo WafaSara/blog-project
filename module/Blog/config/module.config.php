@@ -15,31 +15,29 @@ return array(
                   ),
               ),
             ),
-            'dashboard' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/dashboard',
-                    'defaults' => array(
-                        'controller' => 'Dashboard',
-                        'action'     => 'index',
-                    ),
-                ),
-                'may_terminate' => true,
-                'child_routes' => array(
-                    'default' => array(
-                        'type'    => 'Segment',
-                        'options' => array(
-                            'route'    => '/[:controller[/:action]]',
-                            'constraints' => array(
-                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-                            ),
-                            'defaults' => array(
-                            ),
-                        ),
-                    ),
+          'contact' => array(
+              'type' => 'Literal',
+              'options' => array(
+                  'route' => '/contact',
+                  'defaults' => array(
+                      'controller' => 'Index',
+                      'action'     => 'contact',
+                  ),
               ),
-           ),
+          ),
+          'show_category' => array(
+              'type' => 'Zend\Mvc\Router\Http\Segment',
+              'options' => array(
+                  'route' => '/sport/[:slug]',
+                  'constraints' => array(
+                    'slug'     => '[a-zA-Z][a-zA-Z0-9_\/-]*',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'Category',
+                      'action'     => 'show',
+                  ),
+              ),
+          ),
         ),
      ),
 
@@ -59,11 +57,14 @@ return array(
         'doctype'                  => 'HTML5',
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
-        'layout'                   => 'layout/layout',
+        'layout'                   => 'layout/layoutFront',
+        'layoutError'              => 'layout/layout/layoutError',
+        'blogAccueil'              => 'blog/index',
 
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'dashboard/index'         => __DIR__ . '/../view/blog/dashboard/index.phtml',
+            'layout/layoutFront'      => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layoutError'      => __DIR__ . '/../view/layout/layout-error.phtml',
+            'blog/index'              => __DIR__ . '/../view/blog/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

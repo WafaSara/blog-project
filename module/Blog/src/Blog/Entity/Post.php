@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /** 
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Blog\Repository\PostRepository")
  * @ORM\Table(name="post")
  */
 class Post {
@@ -31,7 +31,8 @@ class Post {
      */
     private $content;
 
-     /**
+
+    /**
      * @var Category post's category
      * @ORM\ManyToOne(targetEntity="Category", inversedBy = "posts")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id" )
@@ -62,6 +63,11 @@ class Post {
      * @var boolean deleted state
      */
     private $deleted;
+
+    /**
+     * @ORM\Column(name="photo", type="string", nullable = true)
+     */
+    private $photo;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
@@ -275,5 +281,28 @@ class Post {
         return $this->comments;
     }
 
+    /**
+     * Gets the value of photo.
+     *
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Sets the value of photo.
+     *
+     * @param mixed $photo the photo
+     *
+     * @return self
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
 
 }

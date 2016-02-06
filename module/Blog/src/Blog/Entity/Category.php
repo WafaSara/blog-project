@@ -5,6 +5,7 @@ namespace Blog\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Cocur\Slugify\Slugify;
 
 /** 
  * @ORM\Entity
@@ -47,7 +48,17 @@ class Category
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
-     private $posts;
+    private $posts;
+
+    /**
+     * @ORM\Column(name="photo", type="string", nullable = true)
+     */
+    private $photo;
+
+    /**
+     * @ORM\Column(name="slug", type="string")
+     */
+    private $slug;
 
 	function __construct()
 	{
@@ -102,6 +113,7 @@ class Category
         return $this;
     }
 
+    
     /**
      * Gets the value of createdAt.
      *
@@ -182,6 +194,43 @@ class Category
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Gets the value of photo.
+     *
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Sets the value of photo.
+     *
+     * @param mixed $photo the photo
+     *
+     * @return self
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    public function setSlug($slug)
+    {
+        $slugify = new Slugify();
+        $this->slug =  $slugify->slugify($slug);
+
+        return $slug;
     }
 }
 
