@@ -3,7 +3,8 @@
 namespace Blog\Entity;
  
 use Doctrine\ORM\Mapping as ORM;
- 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** 
  * @ORM\Entity
  * @ORM\Table(name="post")
@@ -14,55 +15,64 @@ class Post {
      * @var int id
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="pos_id",type="integer")
+     * @ORM\Column(name="id",type="integer")
      */
     private $id;
  
     /** 
      * @var string title of the post
-     * @ORM\Column(name="pos_title",type="string") 
+     * @ORM\Column(name="title",type="string") 
      */
     private $title;
 
     /** 
      * @var string content description
-     * @ORM\Column(name="pos_content",type="text") 
+     * @ORM\Column(name="content",type="text") 
      */
-    private $content; 
+    private $content;
 
      /**
-     * @var  Category post's category
-     * @ORM\OneToOne(targetEntity="Category")
-     * @ORM\JoinColumn(name="pos_category_id", referencedColumnName="cat_id")
+     * @var Category post's category
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy = "posts")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id" )
      */
     private $category;
 
     /**
      * @var  MyUser post's author
-     * @ORM\OneToOne(targetEntity="User\Entity\MyUser")
-     * @ORM\JoinColumn(name="pos_user_id", referencedColumnName="user_id")
+     * @ORM\ManyToOne(targetEntity="User\Entity\MyUser", inversedBy = "posts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
      */
     private $author;
 
     /**
-     * @ORM\Column(name="pos_updated_at", type="datetime")
+     * @ORM\Column(name="updated_at", type="datetime")
      * @var string updated at date
      */
     private $updatedAt; 
 
     /** 
-     * @ORM\Column(name="pos_created_at", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      * @var string created at date
      */
     private $createdAt; 
  
     /** 
-     * @ORM\Column(name="pos_deleted",type="boolean")
+     * @ORM\Column(name="deleted",type="boolean")
      * @var boolean deleted state
      */
     private $deleted;
-  
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+     */
+    private $comments;
+
+
+    function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
     /**
      * Gets the value of id.
      *
@@ -254,4 +264,16 @@ class Post {
 
         return $this;
     }
+
+     /**
+     * Gets the value of comments.
+     *
+     * @return boolean comments state
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+
 }

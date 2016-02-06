@@ -12,6 +12,7 @@ return array(
         'DoctrineORMModule',
         'ZfcBase',
         'ZfcUser',
+        'GoalioMailService',
         'ZfcUserDoctrineORM',
         'ZendDeveloperTools',
         'User',

@@ -159,4 +159,5 @@ return array(
             'logout_redirect_route' => 'zfcuser/login',
     ),
 
+
 );

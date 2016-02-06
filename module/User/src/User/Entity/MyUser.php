@@ -4,6 +4,7 @@ namespace User\Entity;
 
 use ZfcUser\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity 
@@ -24,10 +25,16 @@ class MyUser extends User
      */
     protected $createdAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Blog\Entity\Post", mappedBy="author")
+     */
+    protected $posts;
+
      public function __construct()
     {
         $this->createdAt = new \DateTime();
-        $this->updatedAt= new \DateTime();
+        $this->updatedAt = new \DateTime();
+        $this->posts = new ArrayCollection();
     }
 
     /**
@@ -69,5 +76,15 @@ class MyUser extends User
     public function setUpdateAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    }
+
+     /**
+     * get Post created by myUser
+     *
+     * @return ArrayCollection posts
+     **/
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

@@ -3,7 +3,9 @@
 namespace Blog\Entity; 
 
 use Doctrine\ORM\Mapping as ORM;
- 
+
+use Doctrine\Common\Collections\ArrayCollection;
+
 /** 
  * @ORM\Entity
  * @ORM\Table(name="category")
@@ -13,44 +15,43 @@ class Category
 	/**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @ORM\Column(name="cat_id",type="integer")
+     * @ORM\Column(name="id",type="integer")
 	 * @var int id
 	 */
-	private $id; 
+	private $id;
 
 	/**
-	 * @ORM\Column(name="cat_label",type="string",unique=true) 
+	 * @ORM\Column(name="label",type="string",unique=true) 
 	 * @var string label
 	 */
 	private $label; 
 
 	/**
-	 * @ORM\Column(name="cat_created_at", type="datetime") 
+	 * @ORM\Column(name="created_at", type="datetime") 
 	 * @var string created at date
 	 */
 	private $createdAt;
 
 	/**
-	 * @ORM\Column(name="cat_updated_at", type="datetime")
+	 * @ORM\Column(name="updated_at", type="datetime")
 	 * @var string updated at date
 	 */
 	private $updatedAt; 
 
 	/**
-	 * @ORM\Column(name="cat_deleted",type="boolean") 
+	 * @ORM\Column(name="deleted",type="boolean") 
 	 * @var boolean deleted state
 	 */
 	private $deleted; 
 	
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
+     */
+     private $posts;
 
 	function __construct()
 	{
-		# code...
-	}
-
-	function __destruct()
-	{
-		# code...
+		$posts = new ArrayCollection();
 	}
 
     /**
@@ -171,6 +172,16 @@ class Category
         $this->deleted = $deleted;
 
         return $this;
+    }
+
+    /**
+     * Gets the value of posts.
+     *
+     * @return string posts
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }
 
