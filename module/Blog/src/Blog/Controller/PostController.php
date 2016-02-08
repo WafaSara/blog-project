@@ -16,14 +16,21 @@ class PostController extends AbstractActionController
     {
     }
 
-    /**
-     * get a post by id
-     * @param  int $id id
-     * @return
-     */
-    public function showAction($id)
+    public function showAction()
     {
-      # code...
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        $idPost = $this->params('id');
+
+        $post = $em->getRepository('Blog\Entity\Post')->find($idPost);
+
+        // Le post passé en param est erroné on redirige vers l'accueil
+        if($post == null)
+        {
+            return $this->redirect()->toRoute('home'); 
+        }
+        
+        return new ViewModel(array('post' => $post));
     }
 
     /**

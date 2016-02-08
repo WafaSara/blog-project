@@ -25,6 +25,19 @@ return array(
                   ),
               ),
           ),
+          'show_post' => array(
+              'type' => 'Zend\Mvc\Router\Http\Segment',
+              'options' => array(
+                  'route' => '/post/[:id]',
+                  'constraints' => array(
+                    'id'     => '[0-9]*',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'Post',
+                      'action'     => 'show',
+                  ),
+              ),
+          ),
           'show_category' => array(
               'type' => 'Zend\Mvc\Router\Http\Segment',
               'options' => array(

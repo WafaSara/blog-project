@@ -9,21 +9,21 @@
                 </h1>
                 
                 <?php foreach ($posts as $onePost): ?>
-                    <!-- First Blog Post -->
-                    <h2>
-                        <a href="#"><?php echo $onePost->getTitle(); ?></a>
-                    </h2>
-                    <p class="lead">
-                        écrit par <?php echo $onePost->getAuthor()->getUsername(); ?>
-                    </p>
-                    <p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $onePost->getUpdatedAt()->format('l d F Y'); ?></p>
-                    <hr>
-                    <img class="img-responsive" src="http://placehold.it/900x300" alt="">
-                    <hr>
-                    <p><?php echo substr($onePost->getContent(),0,100)."..."; ?></p>
-                    <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-                    <hr>
-                <?php endforeach ?>
+                <!-- First Blog Post -->
+                <h2>
+                    <a href="<?php echo $this->url('show_post',array('id' => $onePost->getId())); ?>"><?php echo $onePost->getTitle(); ?></a>
+                </h2>
+                <p class="lead">
+                    écrit par <?php echo $onePost->getAuthor()->getUsername(); ?>
+                </p>
+                <p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $onePost->getUpdatedAt()->format('l d F Y'); ?></p>
+                <hr>
+                <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+                <hr>
+                <p><?php echo substr($onePost->getContent(),0,100)."..."; ?></p>
+                <a class="btn btn-primary" href="<?php echo $this->url('show_post',array('id' => $onePost->getId())); ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <hr>
+            <?php endforeach ?>
               
 
                 <!-- Pager -->
