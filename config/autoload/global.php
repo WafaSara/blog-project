@@ -12,5 +12,11 @@
  */
 
 return array(
-    // ...
+    'view_helper_config' => array(
+        'flashmessenger' => array(
+			'message_open_format' => '< div%s >',
+			'message_separator_string' => '< br >',
+			'message_close_string' => '<  /div >',
+       ),
+    ),
 );

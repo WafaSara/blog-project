@@ -38,6 +38,7 @@ return array(
                   ),
               ),
           ),
+          // permet de filtrer les posts par catégories
           'show_category' => array(
               'type' => 'Zend\Mvc\Router\Http\Segment',
               'options' => array(

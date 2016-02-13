@@ -26,7 +26,7 @@ class CategoryController extends AbstractActionController
         // Le slug passé en param est erroné on affiche une error 404
         if($category == null)
         {
-            return $this->redirect()->toRoute('home'); 
+            return $this->redirect()->toRoute('home');
         }
 
         // on récupère les posts du plus récent au plus ancien en fonction de la category

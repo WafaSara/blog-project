@@ -1,0 +1,42 @@
+<h1>Liste des Categories</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+      <th>Nom de la catégorie</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+  <?php foreach($categorys as $oneCategory): ?>
+    <tr>
+      <td><?php echo $oneCategory->getLabel(); ?></td>
+      
+      <td>
+        <a href="<?php echo $this->url('admin_edit_category',array('id' => $oneCategory->getId())) ?>" class="glyphicon glyphicon-edit"> modifier</a> |
+        <a href="<?php echo $this->url('admin_delete_category',array('id' => $oneCategory->getId())) ?>" data-id="<?php echo $oneCategory->getLabel(); ?>" class="delete glyphicon glyphicon-remove"> supprimer</a>
+      </td>
+    </tr>
+  <?php endforeach; ?>
+</table>
+
+
+<?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+     // the paginator object
+     $categorys,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     'partial/paginator.phtml',
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'admin_list_category'
+     )
+ );
+ ?>
+
+<?php echo $this->headScript()->prependFile($this->basePath('js/list.js'));
+
+ ?>

@@ -8,7 +8,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Cocur\Slugify\Slugify;
 
 /** 
- * @ORM\Entity
+ *
+ * @ORM\Entity(repositoryClass="Blog\Repository\CategoryRepository")
  * @ORM\Table(name="category")
  */
 class Category
@@ -43,7 +44,7 @@ class Category
 	 * @ORM\Column(name="deleted",type="boolean") 
 	 * @var boolean deleted state
 	 */
-	private $deleted; 
+	private $deleted = 0;
 	
     /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")

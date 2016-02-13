@@ -29,7 +29,52 @@ return array(
                         ),
                     ),
                 ),
-           ),
+               
+            ),
+            'admin_list_category' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/category/:page',
+                  'constraints' => array(
+                    'page'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminCategory',
+                      'action'     => 'list',
+                      'page'       => 1
+                  ),
+              ),
+            ),
+
+            'admin_edit_category' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/category/edit/:id',
+                  'constraints' => array(
+                    'id'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminCategory',
+                      'action'     => 'edit',
+                      'id'       => 1
+                  ),
+              ),
+            ),
+
+            'admin_delete_category' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/category/delete/:id',
+                  'constraints' => array(
+                    'id'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminCategory',
+                      'action'     => 'delete',
+                      'id'       => 1
+                  ),
+              ),
+            ),
         ),
      ),
 
@@ -54,6 +99,10 @@ return array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'admin/admin-category/index'    => __DIR__ . '/../view/admin/admin-category/index.phtml',
+            'admin/admin-category/list'     => __DIR__ . '/../view/admin/admin-category/list.phtml',
+            'admin/admin-category/edit'     => __DIR__ . '/../view/admin/admin-category/edit.phtml',
+            'admin/admin-category/new'      => __DIR__ . '/../view/admin/admin-category/new.phtml',
         ),
          // The following adds an entry pointing to the view directory
          // of the current module. Make sure your keys differ between modules
