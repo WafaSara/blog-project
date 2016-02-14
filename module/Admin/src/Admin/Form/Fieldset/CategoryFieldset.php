@@ -11,10 +11,12 @@ use Doctrine\ORM\EntityManager;
 
 class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
 {
+    private $entityManager;
     public function __construct(EntityManager $entityManager)
     {
         parent::__construct('category');
 
+        $this->entityManager = $entityManager;
         $this->setHydrator(new DoctrineHydrator($entityManager, 'Admin\Entity\Category'));
 
         $this->add(array(
@@ -28,6 +30,7 @@ class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => array(
             'label' => 'Label',
             ),
+            
         ));
     }
 
@@ -40,9 +43,24 @@ class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         return array(
+            
             'label' => array(
-            'required' => true,
-        )
+                'required' => true,
+
+                'validators' => array(
+                    array(
+                        'name' => 'DoctrineModule\Validator\NoObjectExists',
+                        'options' => array(
+                            'use_context'       => true,
+                            'object_repository' => $this->entityManager->getRepository('Blog\Entity\Category'),
+                            'object_manager' => $this->entityManager,
+                            'fields' => 'label',
+                            'message' => "Le label saisit existe déjà"
+                         
+                        ),
+                    )
+                ),
+            ),
         );
     }
 }

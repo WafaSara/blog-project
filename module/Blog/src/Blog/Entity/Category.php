@@ -236,7 +236,8 @@ class Category
     }
 
     /** 
-    * @ORM\PrePersist 
+    * @ORM\PrePersist()
+    * @ORM\PreUpdate() 
     */
     public function prePersist() {
         // $this->setCreatedAt(new \DateTime());
