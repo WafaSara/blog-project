@@ -57,9 +57,9 @@ class AdminCategoryController extends AbstractActionController
     }
 
     /**
-     * get a category by id
+     * Create a new category
      * @param  none
-     * @return
+     * @return 
      */
     public function newAction()
     {
@@ -105,12 +105,50 @@ class AdminCategoryController extends AbstractActionController
 
     /**
      * edit a a category by id
-     * @param  int $id
+     * @param  none
      * @return
      */
-    public function editAction($id)
+    public function editAction()
     {
-      # code...
+
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('home');
+        }
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        $id = $this->params('id');
+
+        $category = $em->getRepository('Blog\Entity\Category')->find($id);
+
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Admin\Form\Form\CreateCategoryForm');
+
+        $request = $this->getRequest();
+
+        $form->bind($category);
+      
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $submit = $request->getPost('submit');
+
+                $category = $form->getData();
+                
+                $em->flush();
+
+                $this->flashMessenger()
+                   ->setNamespace('success')
+                   ->addMessage('Modification réussi');
+                // Le user a cliqué sur Enregistrer et retourner à la liste
+                if($submit)
+                    return $this->redirect()->toRoute('admin_list_category');
+            }
+        }
+        return new ViewModel(array(
+            'form'    => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),
+            'category' => $category
+        ));
     }
 
     /**

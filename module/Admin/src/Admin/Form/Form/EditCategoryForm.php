@@ -4,19 +4,20 @@ namespace Admin\Form\Form;
 use Zend\Form\Form;
 use Zend\Form\Element\Csrf;
 
-class CreateCategoryForm extends Form
+class EditCategoryForm extends Form
 {
     public function init() {
         
         $this->setAttribute('method', 'post');
 
         $this->add(new Csrf('csrf'));
+
         $this->add(array(
             'name' => 'category',
             'type' => 'CategoryFieldset',
-             'options' => array(
+            /* 'options' => array(
                  'use_as_base_fieldset' => true,
-             ),
+             ),*/
         ));
 
         // Id

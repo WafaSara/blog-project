@@ -47,7 +47,7 @@ class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
             'label' => array(
                 'required' => true,
 
-                'validators' => array(
+               /* 'validators' => array(
                     array(
                         'name' => 'DoctrineModule\Validator\NoObjectExists',
                         'options' => array(
@@ -58,6 +58,18 @@ class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
                             'message' => "Le label saisit existe déjà"
                          
                         ),
+                    )
+                ),*/
+
+                'validators' => array(
+                    array(
+                        'name'    => '\Application\Validator\DbUniqueObject',
+                        'options' => array(
+                            'em'         => $this->entityManager,
+                            'entity'     => 'Blog\Entity\Category', // Entity name
+                            'field'      => 'label', // column name
+                            'exclude_id' => ($this->getObject()->getId()) ? $this->getObject()->getId() : null, // id to exclude (useful in case of editing)
+                        )
                     )
                 ),
             ),

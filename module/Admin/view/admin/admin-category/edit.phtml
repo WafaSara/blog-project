@@ -1,0 +1,23 @@
+
+<h1>Edition de la catégorie <?php echo $category->getLabel() ?></h1>
+
+<br>
+<?php 
+
+$form->setAttribute('action', $this->url('admin_edit_category', array('id' => $category->getId())))
+      ->prepare();
+
+echo $this->form()->openTag($form);
+
+echo $this->formHidden($form->get('id'));
+
+echo $this->formHidden($form->get('csrf'));
+
+$category = $form->get('category');
+
+echo $this->formRow($category->get('label'));
+
+echo $this->formElement($form->get('submit'));
+echo $this->formElement($form->get('submit-and-continue'));
+
+echo $this->form()->closeTag();
