@@ -5,6 +5,10 @@ namespace Admin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container; // We need this when using sessions
+use Blog\Entity\Category;
+use Admin\Form\Form\CreateCategoryForm;
+
+
 
 class AdminCategoryController extends AbstractActionController
 {
@@ -54,12 +58,49 @@ class AdminCategoryController extends AbstractActionController
 
     /**
      * get a category by id
-     * @param  int $id id
+     * @param  none
      * @return
      */
-    public function showAction($id)
+    public function newAction()
     {
-      # code...
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Admin\Form\Form\CreateCategoryForm');
+
+        $request = $this->getRequest();
+        $category = new Category();
+
+        $form->bind($category);
+
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                
+                $submit = $request->getPost('submit');
+
+                $category = $form->getData();
+                
+                $category->setCreatedAt(new \DateTime());
+                $em->persist($category);
+                $em->flush();
+
+                $this->flashMessenger()
+                   ->setNamespace('success')
+                   ->addMessage('Ajout réussi');
+                // Le user a cliqué sur Enregistrer et retourner à la liste
+                if($submit)
+                    return $this->redirect()->toRoute('admin_list_category');
+            }
+        }
+        return new ViewModel(array(
+            'form'    => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages()
+        ));
     }
 
     /**
@@ -113,10 +154,6 @@ class AdminCategoryController extends AbstractActionController
            ->setNamespace('success')
            ->addMessage('Suppression réussi');
 
-       
-
         return $this->redirect()->toRoute('admin_list_category');
     }
-
-
 }

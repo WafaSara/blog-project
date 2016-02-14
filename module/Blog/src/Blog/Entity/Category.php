@@ -11,6 +11,7 @@ use Cocur\Slugify\Slugify;
  *
  * @ORM\Entity(repositoryClass="Blog\Repository\CategoryRepository")
  * @ORM\Table(name="category")
+ * @ORM\HasLifecycleCallbacks
  */
 class Category
 {
@@ -232,6 +233,34 @@ class Category
         $this->slug =  $slugify->slugify($slug);
 
         return $slug;
+    }
+
+    /** 
+    * @ORM\PrePersist 
+    */
+    public function prePersist() {
+        // $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->setSlug($this->label);
+    }
+
+    /**
+     * [getArrayCopy transforme un tableau en objet]
+     * @return Category
+     */
+    public function getArrayCopy()
+    {
+        return get_object_vars($this);
+    }
+    /**
+     * [populate set notre objet lors du bind]
+     * @param  array  $data [description]
+     * @return [type]       [description]
+     */
+    public function populate($data = array())
+    {
+        $this->id = ( isset($data['id'])) ? $data['id'] : null;
+        $this->label = (isset($data['category']['label'])) ? $data['category']['label'] : null;
     }
 }
 

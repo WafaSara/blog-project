@@ -75,6 +75,16 @@ return array(
                   ),
               ),
             ),
+           'admin_new_category' => array(
+              'type' => 'Literal',
+              'options' => array(
+                  'route' => '/dashboard/category/new',
+                  'defaults' => array(
+                      'controller' => 'AdminCategory',
+                      'action'     => 'new',
+                  ),
+              ),
+          ),
         ),
      ),
 

@@ -11,9 +11,26 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
-
-class Module
+use Zend\ModuleManager\Feature\FormElementProviderInterface;
+use Admin\Form\Fieldset\CategoryFieldset;
+class Module implements FormElementProviderInterface
 {
+
+    public function getFormElementConfig()
+    {
+        return array(
+            'factories' => array(
+                'CategoryFieldset' => function($sm) {
+                    // die('ok');
+                    $serviceLocator = $sm->getServiceLocator();
+                    $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new CategoryFieldset($em);
+                    return $fieldset;
+                }
+            )
+        );
+    }
+
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();
