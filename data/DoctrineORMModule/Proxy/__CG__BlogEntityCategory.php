@@ -342,4 +342,38 @@ class Category extends \Blog\Entity\Category implements \Doctrine\ORM\Proxy\Prox
         return parent::setSlug($slug);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function prePersist()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'prePersist', array());
+
+        return parent::prePersist();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getArrayCopy()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getArrayCopy', array());
+
+        return parent::getArrayCopy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function populate($data = array (
+))
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'populate', array($data));
+
+        return parent::populate($data);
+    }
+
 }

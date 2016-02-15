@@ -15,7 +15,7 @@ class CategoryRepository extends EntityRepository
      * @param  integer $limit nb de résultat par page
      * @return Zend\Paginator\Paginator
      */
-    public function getList($numPage,$limit = 2)
+    public function getList($numPage,$limit = 20)
     {
         $queryBuilder = $this
                             ->createQueryBuilder('c')

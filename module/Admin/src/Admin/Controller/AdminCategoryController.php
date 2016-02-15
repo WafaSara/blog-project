@@ -17,7 +17,8 @@ class AdminCategoryController extends AbstractActionController
     {
         $request = $this->getRequest();
         $pageParam = $this->params('page');
-
+        $pageSession = new Container('pageCategory');
+        
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
         $reset = $this->params('reset');
@@ -29,7 +30,7 @@ class AdminCategoryController extends AbstractActionController
         // récupération des filtres de sessions
        
         // le numéro de page on récupère celui reçut en param si y'en a un sinon celui en session
-        $numPage = ($pageParam) ? $pageParam : $_SESSION['category_page'];
+        $numPage = ($pageParam) ? $pageParam : $pageSession->page;
 
         // si méthode post on met à jour les variables de sessions
         if($request->isPost())
@@ -51,7 +52,7 @@ class AdminCategoryController extends AbstractActionController
 
         // On écrase la variable de session que quand on a une page passer en paramètre
         if($numPage != 1)
-            $_SESSION['category_page'] = $numPage;
+            $pageSession->page = $numPage;
 
         return new ViewModel(array("categorys" => $categorys));
     }

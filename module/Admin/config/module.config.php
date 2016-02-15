@@ -34,14 +34,14 @@ return array(
             'admin_list_category' => array(
               'type' => 'Segment',
               'options' => array(
-                  'route' => '/dashboard/category/:page',
+                  'route' => '/dashboard/category[/:page]',
                   'constraints' => array(
                     'page'     => '\d+',
                   ),
                   'defaults' => array(
                       'controller' => 'AdminCategory',
                       'action'     => 'list',
-                      'page'       => 1
+                      // 'page'       => 1
                   ),
               ),
             ),
