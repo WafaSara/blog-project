@@ -10,4 +10,4 @@ nbproject
 .settings
 vendor
 composer.phar
-public/uploads/*
+public/upload/*
