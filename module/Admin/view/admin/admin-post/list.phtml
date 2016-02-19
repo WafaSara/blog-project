@@ -1,18 +1,59 @@
-<section>
-    <h2>Home</h2>
-    <div class="post">
-        <p class="meta">
-            <span class="date"><?php date("Y-m-d"); ?></span>
-            <span class="posted">Posted by <a href="#">TEst</a></span>
-        </p>
-        <p class="meta">
-            <span class="date"><?php date("Y-m-d"); ?></span>
-            <span class="posted">Posted by <a href="#">TEst</a></span>
-        </p>
+<h2>Liste des articles</h2>
 
-        <p class="meta">
-            <span class="date"><?php date("Y-m-d"); ?></span>
-            <span class="posted">Posted by <a href="#">TEst</a></span>
-        </p>
-    </div>
-</section>
+ <a href="<?php echo $this->url('admin_new_post'); ?>">Ajouter un nouvel article</a>
+
+<form action="<?php echo $this->url('admin_post_delete_groups'); ?>" method="POST" id="batchActions">
+<table class="table">
+    <thead>
+
+    <tr>
+      <th><input type="checkbox" onClick="toggleToDelete(this)"></th>
+      <th>Titre</th>
+      <th>Contenu</th>
+      <th>Créé par</th>
+      <th>Créé le</th>
+      <th>Modifié le</th>
+      <th>Nom de la catégorie</th>
+      <th>Publié ?</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+
+  <?php foreach($posts as $onePost): ?>
+    <tr>
+      <td><input type="checkbox" name="toDelete[]" value="<?php echo $onePost->getId(); ?>"></td>
+      <td><?php echo $onePost->getTitle(); ?></td>
+      <td><?php echo substr($onePost->getContent(),0,100)."..."; ?></td>
+      <td><?php echo $onePost->getAuthor(); ?></td>
+      <td><?php echo $this->dateFormat($onePost->getCreatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?></td>
+      <td><?php echo $this->dateFormat($onePost->getUpdatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?></td>
+      <td><?php echo $onePost->getCategory(); ?></td>
+      <td><?php echo ($onePost->isDeleted()) ? "Non" : "Oui" ?></td>
+      <td>
+        <a href="<?php echo $this->url('admin_edit_post',array('id' => $onePost->getId())) ?>" class="glyphicon glyphicon-edit"> modifier</a> |
+        <a href="<?php echo $this->url('admin_delete_post',array('id' => $onePost->getId())) ?>" data-id="<?php echo $onePost->getTitle(); ?>" class="deletePost glyphicon glyphicon-remove"> supprimer</a>
+      </td>
+    </tr>
+  <?php endforeach; ?>
+</table>
+
+<div class="pagination">
+    pour la Sélection: <input type="submit" name="supprimer" value="supprimer" class="btn btn-danger"><input type="submit" name="masquer" value="Publier / Ne plus publier " class="btn btn-info">
+</div>
+</form>
+<?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+     // the paginator object
+     $posts,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     'partial/paginator.phtml',
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'admin_list_post'
+     )
+ );
+ ?>
+

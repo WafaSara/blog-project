@@ -31,6 +31,7 @@ return array(
                 ),
                
             ),
+            // ROUTES FOR CATEGORY
             'admin_list_category' => array(
               'type' => 'Segment',
               'options' => array(
@@ -56,7 +57,6 @@ return array(
                   'defaults' => array(
                       'controller' => 'AdminCategory',
                       'action'     => 'edit',
-                      'id'       => 1
                   ),
               ),
             ),
@@ -71,7 +71,6 @@ return array(
                   'defaults' => array(
                       'controller' => 'AdminCategory',
                       'action'     => 'delete',
-                      'id'       => 1
                   ),
               ),
             ),
@@ -85,6 +84,70 @@ return array(
                   ),
               ),
           ),
+          // END ROUTES FOR CATEGORY
+          // ROUTES FOR POST
+          'admin_list_post' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/post[/:page]',
+                  'constraints' => array(
+                    'page'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminPost',
+                      'action'     => 'list',
+                  ),
+              ),
+            ),
+
+            'admin_edit_post' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/post/edit/:id',
+                  'constraints' => array(
+                    'id'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminPost',
+                      'action'     => 'edit',
+                  ),
+              ),
+            ),
+
+            'admin_delete_post' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/post/delete/:id',
+                  'constraints' => array(
+                    'id'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminPost',
+                      'action'     => 'delete',
+                  ),
+              ),
+            ),
+           'admin_new_post' => array(
+              'type' => 'Literal',
+              'options' => array(
+                  'route' => '/dashboard/post/new',
+                  'defaults' => array(
+                      'controller' => 'AdminPost',
+                      'action'     => 'new',
+                  ),
+              ),
+          ),
+          'admin_post_delete_groups' => array(
+            'type' => 'Literal',
+            'options' => array(
+                'route' => '/dashboard/post/delete/groups',
+                'defaults' => array(
+                    'controller' => 'AdminPost',
+                    'action'     => 'deleteGroups',
+                ),
+            ),
+          ),
+          // END ROUTES FOR POST
         ),
      ),
 

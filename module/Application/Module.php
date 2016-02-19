@@ -13,6 +13,8 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Admin\Form\Fieldset\CategoryFieldset;
+use Admin\Form\Fieldset\PostCreateFieldset;
+
 class Module implements FormElementProviderInterface
 {
 
@@ -25,6 +27,13 @@ class Module implements FormElementProviderInterface
                     $serviceLocator = $sm->getServiceLocator();
                     $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
                     $fieldset = new CategoryFieldset($em);
+                    return $fieldset;
+                },
+                'PostCreateFieldset' => function($sm) {
+                    // die('ok');
+                    $serviceLocator = $sm->getServiceLocator();
+                    $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new PostCreateFieldset($em);
                     return $fieldset;
                 }
             )

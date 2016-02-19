@@ -19,14 +19,6 @@ class CreateCategoryForm extends Form
              ),
         ));
 
-        // Id
-        $this->add(array(
-            'name' => 'id',
-            'attributes' => array(
-                'type' => 'hidden',
-            ),
-        ));
-        
          $this->add(array(
             'name'       => 'submit',
             'attributes' => array(

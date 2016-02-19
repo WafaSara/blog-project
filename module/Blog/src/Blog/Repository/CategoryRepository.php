@@ -29,6 +29,16 @@ class CategoryRepository extends EntityRepository
 
         return $paginator;
     }
+
+    public function getAllOrderBylabel()
+    {
+        $queryBuilder = $this
+                            ->createQueryBuilder('c')
+                            ->orderBy('c.label','ASC')
+                            ->getQuery()
+                            ->getResult();
+        return $queryBuilder;
+    }
 }
 
 ?>

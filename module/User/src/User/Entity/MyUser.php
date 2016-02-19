@@ -87,4 +87,9 @@ class MyUser extends User
     {
         return $this->posts;
     }
+
+    public function __toString()
+    {
+        return $this->username;
+    }
 }

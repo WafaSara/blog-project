@@ -356,6 +356,17 @@ class Category extends \Blog\Entity\Category implements \Doctrine\ORM\Proxy\Prox
     /**
      * {@inheritDoc}
      */
+    public function preUpdate()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'preUpdate', array());
+
+        return parent::preUpdate();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getArrayCopy()
     {
 
@@ -374,6 +385,17 @@ class Category extends \Blog\Entity\Category implements \Doctrine\ORM\Proxy\Prox
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'populate', array($data));
 
         return parent::populate($data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __toString()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, '__toString', array());
+
+        return parent::__toString();
     }
 
 }

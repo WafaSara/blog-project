@@ -20,15 +20,10 @@ class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new DoctrineHydrator($entityManager, 'Admin\Entity\Category'));
 
         $this->add(array(
-            'type' => 'Zend\Form\Element\Hidden',
-            'name' => 'id'
-        ));
-
-        $this->add(array(
             'name' => 'label',
             'type' => 'Text',
             'options' => array(
-            'label' => 'Label',
+            'label' => 'Nom de la catégorie',
             ),
             
         ));

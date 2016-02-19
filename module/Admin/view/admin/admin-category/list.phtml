@@ -16,12 +16,11 @@
       
       <td>
         <a href="<?php echo $this->url('admin_edit_category',array('id' => $oneCategory->getId())) ?>" class="glyphicon glyphicon-edit"> modifier</a> |
-        <a href="<?php echo $this->url('admin_delete_category',array('id' => $oneCategory->getId())) ?>" data-id="<?php echo $oneCategory->getLabel(); ?>" class="delete glyphicon glyphicon-remove"> supprimer</a>
+        <a href="<?php echo $this->url('admin_delete_category',array('id' => $oneCategory->getId())) ?>" data-id="<?php echo $oneCategory->getLabel(); ?>" class="deleteCategory glyphicon glyphicon-remove"> supprimer</a>
       </td>
     </tr>
   <?php endforeach; ?>
 </table>
-
 
 <?php
  // add at the end of the file after the table
@@ -39,6 +38,4 @@
  );
  ?>
 
-<?php echo $this->headScript()->prependFile($this->basePath('js/list.js'));
 
- ?>

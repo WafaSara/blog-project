@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /** 
  * @ORM\Entity(repositoryClass="Blog\Repository\PostRepository")
  * @ORM\Table(name="post")
+ * @ORM\HasLifecycleCallbacks
  */
 class Post {
  
@@ -42,7 +43,7 @@ class Post {
     /**
      * @var  MyUser post's author
      * @ORM\ManyToOne(targetEntity="User\Entity\MyUser", inversedBy = "posts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="user_id")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="user_id")
      */
     private $author;
 
@@ -74,6 +75,12 @@ class Post {
      */
     private $comments;
 
+    /**
+     * @var  MyUser post's update
+     * @ORM\ManyToOne(targetEntity="User\Entity\MyUser")
+     * @ORM\JoinColumn(name="updated_by", referencedColumnName="user_id")
+     */
+    private $updatedBy;
 
     function __construct()
     {
@@ -303,6 +310,60 @@ class Post {
         $this->photo = $photo;
 
         return $this;
+    }
+
+    /** 
+     * @ORM\PrePersist
+     * @return void
+     */
+    public function prePersist() {
+       /* if (empty($this->author)) {
+            $this->setAuthor($this->getAuthenticationService()->getIdentity());
+        }*/
+
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+   /*     $this->setAuthor($this->getAuthenticationService()->getIdentity());
+        $this->setUpdatedBy($this->getAuthenticationService()->getIdentity());*/
+    }
+
+    /** 
+     * @ORM\PreUpdate
+     * @return void
+     */
+    public function preUpdate() {
+        $this->setUpdatedAt(new \DateTime());
+  /*      $this->setAuthor($this->getAuthenticationService()->getIdentity());
+        $this->setUpdatedBy($this->getAuthenticationService()->getIdentity());*/
+    }
+
+    /**
+     * Gets the value of updatedBy.
+     *
+     * @return  MyUser post's updatedBy
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
+    }
+
+    /**
+     * Sets the value of updatedBy.
+     *
+     * @param  MyUser post's updatedBy $updatedBy the updatedBy
+     *
+     * @return self
+     */
+    public function setUpdatedBy($updatedBy)
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    public function isDeleted()
+    {
+        return ($this->deleted) ? true : false;
     }
 
 }

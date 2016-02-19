@@ -8,11 +8,8 @@ use Zend\Session\Container; // We need this when using sessions
 use Blog\Entity\Category;
 use Admin\Form\Form\CreateCategoryForm;
 
-
-
 class AdminCategoryController extends AbstractActionController
 {
-
     public function listAction()
     {
         $request = $this->getRequest();
@@ -25,7 +22,6 @@ class AdminCategoryController extends AbstractActionController
         if(!empty($reset))
         {
             // $monNamespace = new Zend_Session_Namespace('monNamespace');
-            
         }
         // récupération des filtres de sessions
        
@@ -50,8 +46,8 @@ class AdminCategoryController extends AbstractActionController
         // dans le cas ou on a pas de page en paramètre on la met a 1
         $numPage = ($pageParam) ? $pageParam : '1';
 
-        // On écrase la variable de session que quand on a une page passer en paramètre
-        if($numPage != 1)
+        // On écrase la variable de session
+        if($numPage)
             $pageSession->page = $numPage;
 
         return new ViewModel(array("categorys" => $categorys));
@@ -83,10 +79,8 @@ class AdminCategoryController extends AbstractActionController
             if ($form->isValid()) {
                 
                 $submit = $request->getPost('submit');
-
                 $category = $form->getData();
                 
-                $category->setCreatedAt(new \DateTime());
                 $em->persist($category);
                 $em->flush();
 

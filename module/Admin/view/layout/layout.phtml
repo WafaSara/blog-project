@@ -103,7 +103,7 @@
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Articles</a>
+          <a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_post') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Articles</a>
           <a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_category') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Catégories</a>
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Commentaires</a>
           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Utilisateurs</a>
@@ -148,6 +148,7 @@
         ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
         ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
         ->prependFile($this->basePath('js/material.min.js'))
+        ->appendFile($this->basePath('js/list.js'))
     ; ?>
   </body>
 </html>

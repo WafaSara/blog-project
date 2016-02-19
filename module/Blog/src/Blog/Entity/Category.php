@@ -237,10 +237,18 @@ class Category
 
     /** 
     * @ORM\PrePersist()
-    * @ORM\PreUpdate() 
     */
     public function prePersist() {
-        // $this->setCreatedAt(new \DateTime());
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+        $this->setSlug($this->label);
+    }
+
+    /** 
+     * @ORM\PreUpdate
+     * @return void
+     */
+    public function preUpdate() {
         $this->setUpdatedAt(new \DateTime());
         $this->setSlug($this->label);
     }
@@ -262,6 +270,11 @@ class Category
     {
         $this->id = ( isset($data['id'])) ? $data['id'] : null;
         $this->label = (isset($data['category']['label'])) ? $data['category']['label'] : null;
+    }
+
+    public function __toString()
+    {
+        return $this->label;
     }
 }
 
