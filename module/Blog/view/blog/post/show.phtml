@@ -15,7 +15,8 @@
         <p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $post->getUpdatedAt()->format('l d F Y'); ?></p>
         <hr>
         <!-- Preview Image -->
-        <img class="img-responsive" src="http://placehold.it/900x300" alt="">
+        <img class="img-responsive" src="<?php echo $this->basePath($post->getWebPath()) ?>" alt="<?php echo $post->getTitle() ?>">
+        
         <hr>
         <!-- Post Content -->
         <p class="lead"><?php echo $post->getContent(); ?></p>

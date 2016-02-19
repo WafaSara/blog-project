@@ -421,6 +421,15 @@ class Post {
     }
 
     /**
+     * @ORM\PreRemove
+     */
+    public function preRemove(){
+
+        if($this->photo != null)
+            unlink("./public/upload/posts/".$this->photo);
+
+    }
+    /**
      * Gets the value of updatedBy.
      *
      * @return  MyUser post's updatedBy
