@@ -72,18 +72,49 @@ class AdminPostController extends AbstractActionController
 
         $request = $this->getRequest();
         $post = new Post();
-
-        // $post->setCategory(new Category());
         $form->bind($post);
 
         if ($request->isPost()) {
-            $form->setData($request->getPost());
-           /* var_dump($form);
-            die();*/
+            $postData = array_merge_recursive((array)$request->getPost(), (array)$request->getFiles());
+            $file = (array)$request->getFiles();
+        
+            // fichier incorect
+            if(!$file)
+            {
+                $this->flashMessenger()
+                   ->setNamespace('error')
+                   ->addMessage('Le fichier envoyé est incorrect');
+                return $this->redirect()->toRoute('admin_new_post');
+            }
+            
+            $form->setData($postData);
+
             if ($form->isValid()) {
-                
-                $submit = $request->getPost('submit');
                 $post = $form->getData();
+
+                // tableau contenant le nom dufichier['name'] uploader,[type], [tmp_name],[error],[size]
+                $filesDetails = $post->getFile();
+             
+                $httpadapter = new \Zend\File\Transfer\Adapter\Http(); 
+                $httpadapter->setDestination($post->getAbsoluteUploadDir());
+                
+                $path_parts = pathinfo($filesDetails['name']);
+                
+                $photo = sha1(uniqid(mt_rand(), true)).".".$path_parts['extension'];
+
+                $newFilePath  = "./public/".$post->getUploadDir().'/'.$photo;
+                // modification du fichier uploader
+                $httpadapter->addFilter('\Zend\Filter\File\Rename', array('target' => $newFilePath,
+                    'overwrite' => false));
+
+                // move uploaded file
+                $httpadapter->receive();
+             
+                $post->setPhoto($photo);
+                $post->setPhotoRealName($filesDetails['name']);
+                $post->setPhotoExtension($path_parts['extension']);
+
+                $submit = $request->getPost('submit');
                 $auth = $this->getServiceLocator()->get('zfcuser_auth_service');
 
                 $user = $auth->getIdentity();
@@ -145,7 +176,7 @@ class AdminPostController extends AbstractActionController
         }
         
         $em->remove($post);
-        // $em->flush();
+        $em->flush();
 
         $this->flashMessenger()
            ->setNamespace('success')
@@ -165,7 +196,7 @@ class AdminPostController extends AbstractActionController
         {
             if($tabId)
             {
-                /*foreach ($tabId as $id) {
+                foreach ($tabId as $id) {
                     $post = $em->getRepository('Blog\Entity\Post')->find($id);
 
                     if(!$post)
@@ -188,7 +219,7 @@ class AdminPostController extends AbstractActionController
                     $em->remove($post);
                 }
 
-                $em->flush();*/
+                $em->flush();
 
                 $this->flashMessenger()
                            ->setNamespace('success')
@@ -216,7 +247,7 @@ class AdminPostController extends AbstractActionController
                     else // L'article est publié on le masque
                         $post->setDeleted(1);
 
-                    // $em->flush();
+                    $em->flush();
                 }
 
                 $this->flashMessenger()

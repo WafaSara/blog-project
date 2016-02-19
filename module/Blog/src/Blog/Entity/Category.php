@@ -268,7 +268,7 @@ class Category
      */
     public function populate($data = array())
     {
-        $this->id = ( isset($data['id'])) ? $data['id'] : null;
+        // $this->id = ( isset($data['id'])) ? $data['id'] : null;
         $this->label = (isset($data['category']['label'])) ? $data['category']['label'] : null;
     }
 

@@ -37,5 +37,7 @@ class CreatePostForm extends Form
                 'class' => 'btn btn-success'
             )
         ));
+
+        
     }
 }

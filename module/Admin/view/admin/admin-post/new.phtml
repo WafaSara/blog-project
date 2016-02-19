@@ -3,7 +3,7 @@
 
 <br>
 <?php 
-
+// $form->prepare();
 $form->setAttribute('action', $this->url('admin_new_post'))
       ->prepare();
 
@@ -17,6 +17,8 @@ echo $this->formRow($post->get('title'));
 echo $this->formRow($post->get('content'));
 echo $this->formRow($post->get('category'));
 echo $this->formRow($post->get('deleted'));
+echo $this->formRow($post->get('file'));
+
 
 echo $this->formElement($form->get('submit'));
 echo $this->formElement($form->get('submit-and-continue'));

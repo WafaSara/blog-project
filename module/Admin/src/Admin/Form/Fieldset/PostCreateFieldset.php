@@ -78,13 +78,48 @@ class PostCreateFieldset extends Fieldset implements InputFilterProviderInterfac
              'type' => 'Zend\Form\Element\Select',
              'name' => 'deleted',
              'options' => array(
-                     'label' => 'Publier.',
+                     'label' => 'Publier ?',
                      'value_options' => array(
                              '0' => 'oui',
                              '1' => 'non',
                      ),
              )
              ));
+
+        $this->add(array(
+            'name' => 'file',
+            'type'  => 'Zend\Form\Element\File',
+            'options' => array(
+                     'label' => 'Photo',
+              /*       'validators' => array(
+                        array(
+                            'name' => '\Application\Validator\Image',
+                            'options' => array(
+                                    'minSize' => '64',
+                                    'maxSize' => '10024',
+                                    // 'newFileName' => 'newFileName2',
+                                    // 'uploadPath' => '/public/upload/posts'
+                            )
+                        )
+                    )*/
+                    /*'validators' => array(
+                        array(
+                            'name' => 'Zend\Validator\File\Size',
+                            'options' => array(
+                                // 'min' => 50,
+                                'max' => 200000000000000000000000000000,
+                            ),
+                        ),
+                        array(
+                            'name' => 'Zend\Validator\File\Extension',
+                            'options' => array(
+                                'extension' => array('jpg', 'png', 'gif', 'jpeg')
+                            ),
+                        ),
+                    ),*/
+
+             )
+        ));
     }
 
     /**

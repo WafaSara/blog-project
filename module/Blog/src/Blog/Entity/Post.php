@@ -71,6 +71,16 @@ class Post {
     private $photo;
 
     /**
+     * @ORM\Column(name="photo_real_name", type="string", nullable = true)
+     */
+    private $photoRealName;
+
+    /**
+     * @ORM\Column(name="photo_extension", type="string", nullable = true)
+     */
+    private $photoExtension;
+
+    /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     private $comments;
@@ -81,6 +91,8 @@ class Post {
      * @ORM\JoinColumn(name="updated_by", referencedColumnName="user_id")
      */
     private $updatedBy;
+
+    public $file;
 
     function __construct()
     {
@@ -312,6 +324,77 @@ class Post {
         return $this;
     }
 
+      /**
+     * Gets the value of file.
+     *
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Sets the value of file.
+     *
+     * @param mixed $file the file
+     *
+     * @return self
+     */
+    public function setFile($file)
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of photoRealName.
+     *
+     * @return mixed
+     */
+    public function getPhotoRealName()
+    {
+        return $this->photoRealName;
+    }
+
+    /**
+     * Sets the value of photoRealName.
+     *
+     * @param mixed $photoRealName the photoRealName
+     *
+     * @return self
+     */
+    public function setPhotoRealName($photoRealName)
+    {
+        $this->photoRealName = $photoRealName;
+
+        return $this;
+    }
+
+     /**
+     * Gets the value of photoExtension.
+     *
+     * @return mixed
+     */
+    public function getPhotoExtension()
+    {
+        return $this->photoExtension;
+    }
+
+    /**
+     * Sets the value of photoExtension.
+     *
+     * @param mixed $photoExtension the photoExtension
+     *
+     * @return self
+     */
+    public function setPhotoExtension($photoExtension)
+    {
+        $this->photoExtension = $photoExtension;
+
+        return $this;
+    }
     /** 
      * @ORM\PrePersist
      * @return void
@@ -366,4 +449,19 @@ class Post {
         return ($this->deleted) ? true : false;
     }
 
+    public function getWebPath()
+    {
+        return null === $this->photo
+             ? null
+             : $this->getUploadDir().'/'.$this->photo;
+    }
+
+    public function getUploadDir() {
+        
+        return 'upload/posts';
+    }
+    public function getAbsoluteUploadDir() {
+        
+        return "./data/upload/posts";
+    }
 }
