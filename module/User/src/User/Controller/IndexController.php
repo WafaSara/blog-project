@@ -12,6 +12,14 @@ namespace User\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Crypt\Password\Bcrypt;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\Mail\Message as MailMessage;
+use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
+use Zend\Mime\Mime;
+use Zend\Mail\Message;
+use User\Entity\Token;
+
 /**
  *
  */
@@ -56,6 +64,127 @@ class  IndexController extends AbstractActionController
 
         return $password;
 	}
+
+  public function forgotPasswordAction()
+  {
+      $formManager = $this->serviceLocator->get('FormElementManager');
+      $form = $formManager->get('User\Form\Form\ForgotPasswordForm');
+      
+      $request = $this->getRequest();
+
+      // $form->bind($category);
+
+      if ($request->isPost()) {
+          $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+          $form->setData($request->getPost());
+          if ($form->isValid()) {
+              $data = $form->getData();
+              $email = $data['email'];
+
+              $user = $em->getRepository('User\Entity\MyUser')->findOneByEmail($email);
+              if(!$user)
+              {
+
+                $this->flashMessenger()
+                   ->setNamespace('error')
+                   ->addMessage('Le mail saisit n\'existe pas');
+                return $this->redirect()->toRoute('user_forgot_password');
+              }
+              else // on envoie un mail ac un jeton valide 24h pour puvoir changer de mot de pass 
+              {
+                $viewTemplate = 'user/index/mail-change-password';
+                $uri = $this->getRequest()->getUri();
+                $host = $uri->getHost();
+
+                $exToken = $em->getRepository('User\Entity\Token')->findOneByUser($user);
+                if($exToken)
+                {
+                    $em->remove($exToken);
+                    $em->flush();
+                }
+                $token = new Token();
+                $token->setUser($user);
+                $em->persist($token);
+                $em->flush();
+             
+                // The ViewModel variables to pass into the renderer
+                $value = array('token' => $token->getToken(),'host' => $host);
+
+                $mailService = $this->getServiceLocator()->get('goaliomailservice_message');
+
+                $admin = $em->getRepository('User\Entity\MyUser')->findOneByIsSuperAdmin(1);
+
+                try {
+                    
+                    $html = $mailService->getRenderer()->render(
+                    $viewTemplate, $value
+                    );
+
+                    $htmlPart = new MimePart($html);
+                    $htmlPart->type = "text/html; charset=UTF-8";
+                    $htmlPart->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
+
+                    $body = new MimeMessage();
+                    $body->setParts(array($htmlPart));
+
+                    $message = new Message();
+                    $message->setFrom($admin->getMailCompany(), $admin->getMailCompany())
+                        ->setEncoding('utf-8')
+                        ->setSubject("Mot de passe oublié")
+                        ->setBody($body)
+                        ->setTo($email);
+
+                    $mailService->send($message);
+                } catch (\Exception $e) {
+                    $this->flashMessenger()
+                       ->setNamespace('error')
+                       ->addMessage('L\'envoie de mail a échoué');
+                }
+
+     /*           $message = $mailService->createTextMessage("soumare.iss@gmail.com", "isoumare@atixnet.fr", "reset-password", $viewTemplate,$value);
+                $message->getHeaders()->get('content-type')->setType('multipart/alternative');
+                $mailService->send($message);
+*/
+              }
+              
+
+              $this->flashMessenger()
+                 ->setNamespace('success')
+                 ->addMessage('Un mail vous a été envoyé afin de pouvoir changer votre email');
+              // Le user a cliqué sur Enregistrer et retourner à la liste
+              return $this->redirect()->toRoute('user_forgot_password');
+          }
+      }
+
+      return new ViewModel(array(
+        'form'    => $form,
+        'flashMessages' => $this->flashMessenger()->getMessages()
+
+        ));
+  }
+
+
+    public function changePasswordAction()
+    {
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+        
+        $paramToken = $this->params('token');
+        
+        $token = $em->getRepository('User\Entity\Token')->findOneByToken($paramToken);
+        
+        if(!$token)
+        {
+           return $this->redirect()->toRoute('home');
+        }
+
+        return new ViewModel(array(
+          // 'form'    => $form,
+          'flashMessages' => $this->flashMessenger()->getMessages(),
+          'token' => $token
+
+        ));
+    }
 }
 
  ?>

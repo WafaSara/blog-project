@@ -25,6 +25,7 @@ $form->setAttribute('autocomplete', 'off');
         <?php endif ?>
 
         <dd><?php echo $this->formButton($form->get('submit')) ?></dd>
+        <a href="<?php echo $this->url('user_forgot_password'); ?>"> Mot de pass oublié?</a>
     </dl>
 
 <?php echo $this->form()->closeTag() ?>

@@ -108,6 +108,44 @@ return array(
                     ),
                 ),
             ),
+
+            'user_forgot_password' => array(
+                'type'    => 'Literal',
+                'options' => array(
+                    'route'    => '/member/mot-de-passe-oublie',
+                    'defaults' => array(
+                        'controller'    => 'UserController',
+                        'action'        => 'forgotPassword',
+                    ),
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'default' => array(
+                        'type'    => 'Segment',
+                        'options' => array(
+                            'route'    => '/[:controller[/:action]]',
+                            'constraints' => array(
+                                'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+                            ),
+                            'defaults' => array(
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+
+            'user_change_password' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/cache/forgot-password/:token',
+                  'defaults' => array(
+                      'controller' => 'UserController',
+                      'action'     => 'changePassword',
+                      // 'page'       => 1
+                  ),
+              ),
+            ),
         ),
     ),
     'controllers' => array(

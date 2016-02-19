@@ -64,10 +64,10 @@ class MyUser extends \User\Entity\MyUser implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'id', 'username', 'email', 'displayName', 'password', 'state');
+            return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'id', 'username', 'email', 'displayName', 'password', 'state');
         }
 
-        return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'id', 'username', 'email', 'displayName', 'password', 'state');
+        return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'id', 'username', 'email', 'displayName', 'password', 'state');
     }
 
     /**
@@ -231,12 +231,34 @@ class MyUser extends \User\Entity\MyUser implements \Doctrine\ORM\Proxy\Proxy
     /**
      * {@inheritDoc}
      */
+    public function getIsSuperAdmin()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIsSuperAdmin', array());
+
+        return parent::getIsSuperAdmin();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function __toString()
     {
 
         $this->__initializer__ && $this->__initializer__->__invoke($this, '__toString', array());
 
         return parent::__toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMailCompany()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMailCompany', array());
+
+        return parent::getMailCompany();
     }
 
     /**
