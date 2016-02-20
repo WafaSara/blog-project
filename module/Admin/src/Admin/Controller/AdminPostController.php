@@ -4,7 +4,7 @@ namespace Admin\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Zend\Session\Container; // We need this when using sessions
+use Zend\Session\Container; // Pour les sessions
 use Blog\Entity\Post;
 use Blog\Entity\Category;
 
@@ -21,33 +21,65 @@ class AdminPostController extends AbstractActionController
         $request = $this->getRequest();
         $pageParam = $this->params('page');
         $pageSession = new Container('pagePost');
+        $tabFiltreSession = new Container('tabFiltreSession');
+
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
+        // initialisation du tableau de filtre
+        $tabFiltre['title'] = null;
+        $tabFiltre['category'] = null;
+        $tabFiltre['deleted'] = 0;
         $reset = $this->params('reset');
+
+        // on réinitialise toute la session
         if(!empty($reset))
         {
-            // $monNamespace = new Zend_Session_Namespace('monNamespace');
-            
+            $tabFiltreSession->filtre = $tabFiltre;
+            $pageSession->page = 1;
+
         }
-        // récupération des filtres de sessions
 
         // le numéro de page on récupère celui reçut en param si y'en a un sinon celui en session
         $numPage = ($pageParam) ? $pageParam : $pageSession->page;
 
-        // si méthode post on met à jour les variables de sessions
-        if($request->isPost())
-        {
-           
-        }
         // créer le form de filtre
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Admin\Form\Form\FilterPostForm');
+
+        $post = new Post();
+        if($tabFiltreSession->filtre != null)
+        {
+            $post->setTitle($tabFiltreSession->filtre['title']);
+            $post->setCategory($tabFiltreSession->filtre['category']);
+            $post->setDeleted($tabFiltreSession->filtre['deleted']);
+        }
+
+        $form->bind($post);
+        
 
         if($request->isPost() == false)
         {
-            $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage);
+            if(!empty($tabFiltreSession->filtre))
+                $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage,10,$tabFiltre);
+            else // on filtre avec la session
+                $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage,10,$tabFiltreSession);
         }
-        else // on filtre
+        else // on est en post, on filtre
         {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                
+                $data = $form->getData();
+                $tabFiltre = array();
 
+                $tabFiltre['title'] = $data->getTitle();
+                $tabFiltre['category'] = $data->getCategory();
+                $tabFiltre['deleted'] = $data->getDeleted();
+
+                $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage,10,$tabFiltre);
+
+                $tabFiltreSession->filtre = $tabFiltre;
+            }
         }
         // dans le cas ou on a pas de page en paramètre on la met a 1
         $numPage = ($pageParam) ? $pageParam : '1';
@@ -56,7 +88,10 @@ class AdminPostController extends AbstractActionController
         if($numPage)
             $pageSession->page = $numPage;
 
-        return new ViewModel(array("posts" => $posts));
+        return new ViewModel(array(
+            "posts" => $posts,
+            "form" => $form
+        ));
     }
 
     public function newAction()
@@ -188,7 +223,7 @@ class AdminPostController extends AbstractActionController
                 // on a un fichier a upload
                 if($filesDetails['tmp_name'] != "")
                 {
-                    if(file_exists($post->getAbsoluteWebPath()))
+                    if($post->getPhoto() != null && file_exists($post->getAbsoluteWebPath()))
                     {
                         unlink($post->getAbsoluteWebPath());
                     }

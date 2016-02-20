@@ -53,11 +53,25 @@ class PostRepository extends EntityRepository
      * @param  array tabFiltre
      * @return Zend\Paginator\Paginator
      */
-    public function getList($numPage,$limit = 10)
+    public function getList($numPage,$limit = 10,$tabFiltre)
     {
-        $queryBuilder = $this
-                            ->createQueryBuilder('p')
-                            ->orderBy('p.updatedAt','DESC');
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        if($tabFiltre['title'] != null)
+        {
+            $queryBuilder = $queryBuilder->andWhere('p.title LIKE :title')
+                                        ->setParameter('title',"%".$tabFiltre['title']."%");
+        }
+
+        if($tabFiltre['category'] != null)
+        {
+            $queryBuilder = $queryBuilder->andWhere('p.category = :category')
+                                        ->setParameter('category',$tabFiltre['category']);
+        }
+
+        $queryBuilder = $queryBuilder->andWhere('p.deleted = :deleted')
+                                        ->setParameter('deleted',$tabFiltre['deleted'])
+                                        ->orderBy('p.updatedAt','DESC');
 
         $ORMPaginator     = new ORMPaginator($queryBuilder->getQuery(), false);
         $paginatorAdapter = new DoctrinePaginator($ORMPaginator);

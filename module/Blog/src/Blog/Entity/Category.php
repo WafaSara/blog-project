@@ -254,7 +254,7 @@ class Category
     }
 
     /**
-     * [getArrayCopy transforme un tableau en objet]
+     * [getArrayCopy transforme un objet en tableau]
      * @return Category
      */
     public function getArrayCopy()

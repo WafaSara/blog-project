@@ -89,9 +89,11 @@ return array(
           'admin_list_post' => array(
               'type' => 'Segment',
               'options' => array(
-                  'route' => '/dashboard/post[/:page]',
+                  'route' => '/dashboard/post[/:page][/:reset]',
                   'constraints' => array(
                     'page'     => '\d+',
+                    'reset'     => '\d+',
+
                   ),
                   'defaults' => array(
                       'controller' => 'AdminPost',

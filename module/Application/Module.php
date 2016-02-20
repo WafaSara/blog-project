@@ -14,6 +14,8 @@ use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Admin\Form\Fieldset\CategoryFieldset;
 use Admin\Form\Fieldset\PostCreateFieldset;
+use Admin\Form\Fieldset\PostFilterFieldset;
+
 
 class Module implements FormElementProviderInterface
 {
@@ -23,17 +25,23 @@ class Module implements FormElementProviderInterface
         return array(
             'factories' => array(
                 'CategoryFieldset' => function($sm) {
-                    // die('ok');
                     $serviceLocator = $sm->getServiceLocator();
                     $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
                     $fieldset = new CategoryFieldset($em);
                     return $fieldset;
                 },
                 'PostCreateFieldset' => function($sm) {
-                    // die('ok');
                     $serviceLocator = $sm->getServiceLocator();
                     $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
                     $fieldset = new PostCreateFieldset($em);
+                    return $fieldset;
+                },
+
+                'PostFilterFieldset' => function($sm) {
+                    // die('ok');
+                    $serviceLocator = $sm->getServiceLocator();
+                    $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new PostFilterFieldset($em);
                     return $fieldset;
                 }
             )

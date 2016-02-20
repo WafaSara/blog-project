@@ -28,7 +28,7 @@ return array(
           'show_post' => array(
               'type' => 'Zend\Mvc\Router\Http\Segment',
               'options' => array(
-                  'route' => '/post/[:id]',
+                  'route' => '/post/:id',
                   'constraints' => array(
                     'id'     => '[0-9]*',
                   ),
