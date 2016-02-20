@@ -144,7 +144,95 @@ class AdminPostController extends AbstractActionController
      */
     public function editAction()
     {
-      # code...
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('home');
+        }
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        $id = $this->params('id');
+
+        $post = $em->getRepository('Blog\Entity\Post')->find($id);
+
+        if(!$post)
+        {
+            return $this->redirect()->toRoute('admin_list_post');
+        }
+
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Admin\Form\Form\CreatePostForm');
+
+        $request = $this->getRequest();
+
+        $form->bind($post);
+      
+        if ($request->isPost()) {
+            $postData = array_merge_recursive((array)$request->getPost(), (array)$request->getFiles());
+            $file = (array)$request->getFiles();
+        
+            // fichier incorect
+            if(!$file)
+            {
+                $this->flashMessenger()
+                   ->setNamespace('error')
+                   ->addMessage('Le fichier envoyé est incorrect');
+                return $this->redirect()->toRoute('admin_edit_post',array("id" => $post->getId()));
+            }
+
+            $form->setData($postData);
+            if ($form->isValid()) {
+                $post = $form->getData();
+
+                // tableau contenant le nom dufichier['name'] uploader,[type], [tmp_name],[error],[size]
+                $filesDetails = $post->getFile();
+               
+                // on a un fichier a upload
+                if($filesDetails['tmp_name'] != "")
+                {
+                    if(file_exists($post->getAbsoluteWebPath()))
+                    {
+                        unlink($post->getAbsoluteWebPath());
+                    }
+
+                    $httpadapter = new \Zend\File\Transfer\Adapter\Http(); 
+                    $httpadapter->setDestination($post->getAbsoluteUploadDir());
+                    
+                    $path_parts = pathinfo($filesDetails['name']);
+                    
+                    $photo = sha1(uniqid(mt_rand(), true)).".".$path_parts['extension'];
+
+                    $newFilePath  = "./public/".$post->getUploadDir().'/'.$photo;
+                    // modification du fichier uploader
+                    $httpadapter->addFilter('\Zend\Filter\File\Rename', array('target' => $newFilePath,
+                        'overwrite' => false));
+
+                    // move uploaded file
+                    $httpadapter->receive();
+                 
+                    $post->setPhoto($photo);
+                    $post->setPhotoRealName($filesDetails['name']);
+                    $post->setPhotoExtension($path_parts['extension']);
+                }
+
+                $submit = $request->getPost('submit');
+
+                $post = $form->getData();
+                $em->flush();
+
+                $this->flashMessenger()
+                   ->setNamespace('success')
+                   ->addMessage('Modification réussi');
+                // Le user a cliqué sur Enregistrer et retourner à la liste
+                if($submit)
+                    return $this->redirect()->toRoute('admin_list_post');
+                else
+                    return $this->redirect()->toRoute('admin_edit_post',array("id" => $post->getId()));
+            }
+        }
+        return new ViewModel(array(
+            'form'    => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),
+            'post' => $post
+        ));
     }
 
     /**

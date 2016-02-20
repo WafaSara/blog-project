@@ -115,6 +115,11 @@ class AdminCategoryController extends AbstractActionController
 
         $category = $em->getRepository('Blog\Entity\Category')->find($id);
 
+        if(!$category)
+        {
+            return $this->redirect()->toRoute('admin_list_category');
+        }
+        
         $formManager = $this->serviceLocator->get('FormElementManager');
         $form = $formManager->get('Admin\Form\Form\CreateCategoryForm');
 

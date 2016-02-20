@@ -416,6 +416,7 @@ class Post {
      */
     public function preUpdate() {
         $this->setUpdatedAt(new \DateTime());
+     
   /*      $this->setAuthor($this->getAuthenticationService()->getIdentity());
         $this->setUpdatedBy($this->getAuthenticationService()->getIdentity());*/
     }
@@ -426,7 +427,7 @@ class Post {
     public function preRemove(){
 
         if($this->photo != null)
-            unlink("./public/upload/posts/".$this->photo);
+            unlink($this->getAbsoluteWebPath());
 
     }
     /**
@@ -472,5 +473,10 @@ class Post {
     public function getAbsoluteUploadDir() {
         
         return "./data/upload/posts";
+    }
+
+    public function getAbsoluteWebPath() {
+        
+        return "./public/upload/posts/".$this->photo;
     }
 }
