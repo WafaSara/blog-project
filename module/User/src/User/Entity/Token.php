@@ -113,6 +113,6 @@ class Token
     {
         $now = new \DateTime();
 
-        return ($now > $this->getExpireAt()) ? true : false;
+        return ($now < $this->getExpireAt()) ? true : false;
     }
 }

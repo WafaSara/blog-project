@@ -72,8 +72,6 @@ class  IndexController extends AbstractActionController
       
       $request = $this->getRequest();
 
-      // $form->bind($category);
-
       if ($request->isPost()) {
           $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
@@ -115,7 +113,7 @@ class  IndexController extends AbstractActionController
 
                 $admin = $em->getRepository('User\Entity\MyUser')->findOneByIsSuperAdmin(1);
 
-                try {
+               /* try {
                     
                     $html = $mailService->getRenderer()->render(
                     $viewTemplate, $value
@@ -140,7 +138,7 @@ class  IndexController extends AbstractActionController
                     $this->flashMessenger()
                        ->setNamespace('error')
                        ->addMessage('L\'envoie de mail a échoué');
-                }
+                }*/
 
      /*           $message = $mailService->createTextMessage("soumare.iss@gmail.com", "isoumare@atixnet.fr", "reset-password", $viewTemplate,$value);
                 $message->getHeaders()->get('content-type')->setType('multipart/alternative');
@@ -178,14 +176,45 @@ class  IndexController extends AbstractActionController
            return $this->redirect()->toRoute('home');
         }
 
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('User\Form\Form\ChangePasswordForm');
+        
+        $request = $this->getRequest();
+
+
+        if($request->isPost()) 
+        {
+          $form->setData($request->getPost());
+           if($form->isValid()) {
+              $data = $form->getData();
+              $user = $em->getRepository('User\Entity\MyUser')->find($token->getUser());
+              $password = $data["new_password"];
+              $bcrypt = new Bcrypt;
+              $bcrypt->setCost(14);
+
+              $crypt = $bcrypt->create($password);
+              $user->setPassword($crypt);
+              $em->remove($token);
+              $em->flush();
+              $this->flashMessenger()->addMessage("Changement de mot de passe réussi Authentifié vous");
+            /*  $this->flashMessenger()
+                   ->setNamespace('notice')
+                   ->addMessage('Changement de mot de passe réussi Authentifié vous');*/
+
+              return $this->redirect()->toRoute('zfcuser');
+           }
+        }
+        // $form->bind($category);
+
         return new ViewModel(array(
-          // 'form'    => $form,
+          'form'    => $form,
           'flashMessages' => $this->flashMessenger()->getMessages(),
           'token' => $token
 
         ));
     }
+
 }
 
- ?>
+?>
 

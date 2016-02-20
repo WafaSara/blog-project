@@ -4,18 +4,32 @@ namespace User;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Zend\ModuleManager\ModuleManager;
+use Zend\I18n\Translator\TranslatorInterface;
+use Zend\I18n\Translator\Translator;
+
+use Zend\Validator\AbstractValidator;
 
 class Module
 {
-    /*public function onBootstrap(MvcEvent $e) {
+    public function onBootstrap(MvcEvent $e) {
         $eventManager = $e->getApplication ()->getEventManager ();
-        $moduleRouteListener = new ModuleRouteListener ();
+        /*$moduleRouteListener = new ModuleRouteListener ();
         $moduleRouteListener->attach ( $eventManager );
-        $eventManager->attach('dispatch', array($this, 'checkLoginChangeLayout'));
-
+        $eventManager->attach('dispatch', array($this, 'checkLoginChangeLayout'));*/
+        $translator = new Translator();
+$translator->addTranslationFile(
+ 'phpArray',
+ 'vendor/zendframework/zendframework/resources/languages/fr/Zend_Validate.php'
+/* 'default',
+ 'fr_FR'*/
+);
+AbstractValidator::setDefaultTranslator(
+    new \Zend\Mvc\I18n\Translator($translator)
+);
+        
     }
 
-    public function checkLoginChangeLayout(MvcEvent $e) {
+ /*   public function checkLoginChangeLayout(MvcEvent $e) {
     if (! $e->getApplication ()->getServiceManager ()->get( 'zfcuser_auth_service' )->hasIdentity ()) {
         $controller = $e->getTarget ();
         $controller->layout ( 'layout/authentication.phtml' );

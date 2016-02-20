@@ -1,5 +1,6 @@
 <?php
 namespace User\Form\Form;
+
 use Zend\Form\Element;
 use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -7,9 +8,11 @@ use Zend\InputFilter\InputFilterProviderInterface;
 class ForgotPasswordForm extends Form implements InputFilterProviderInterface
 {
     protected $inputFilter;
+
     public function __construct()
     {
-        parent::__construct('request');
+        parent::__construct('forgot-password');
+
         $this->setAttribute('method', 'post');
 
         $this->add([
@@ -57,6 +60,10 @@ class ForgotPasswordForm extends Form implements InputFilterProviderInterface
                         'name'    => '\Zend\Validator\EmailAddress',
                         'options' => [
                             'domain' => false,
+                            'messages' => [
+                                \Zend\Validator\EmailAddress::INVALID => 'Veuiilez saisir une adresse mail correcte',
+                                // \Zend\Validator\NotEmpty::IS_EMPTY => "Veuillez remplir ce champ"
+                            ]
                         ],
                     ],
                 ],
