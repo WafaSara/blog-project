@@ -13,7 +13,7 @@
   echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
 
  ?>
- 
+
 <h1><?php echo $this->translate('Connexion'); ?></h1>
 
 <?php
@@ -32,14 +32,14 @@ $form->setAttribute('autocomplete', 'off');
         <dt><?php echo $this->formLabel($form->get('identity')) ?></dt>
         <dd><?php echo $this->formInput($form->get('identity')) ?></dd>
 
-        <dt><?php echo $this->formLabel($form->get('credential')) ?></dt>
+        <dt><?php echo $this->formLabel($form->get('credential')->setLabel("Mot de passe")) ?></dt>
         <dd><?php echo $this->formInput($form->get('credential')) ?></dd>
 
         <?php if ($this->redirect): ?>
             <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
         <?php endif ?>
 
-        <dd><?php echo $this->formButton($form->get('submit')) ?></dd>
+        <dd><?php echo $this->formButton($form->get('submit')->setLabel("Se connecter")) ?></dd>
         <a href="<?php echo $this->url('user_forgot_password'); ?>"> Mot de pass oublié?</a>
     </dl>
 
