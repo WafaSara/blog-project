@@ -15,7 +15,7 @@ use Zend\ModuleManager\Feature\FormElementProviderInterface;
 use Admin\Form\Fieldset\CategoryFieldset;
 use Admin\Form\Fieldset\PostCreateFieldset;
 use Admin\Form\Fieldset\PostFilterFieldset;
-
+use Admin\Form\Fieldset\CommentFieldset;
 
 class Module implements FormElementProviderInterface
 {
@@ -38,10 +38,16 @@ class Module implements FormElementProviderInterface
                 },
 
                 'PostFilterFieldset' => function($sm) {
-                    // die('ok');
                     $serviceLocator = $sm->getServiceLocator();
                     $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
                     $fieldset = new PostFilterFieldset($em);
+                    return $fieldset;
+                },
+                'CommentFieldset' => function($sm) {
+                    // die('ok');
+                    $serviceLocator = $sm->getServiceLocator();
+                    $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new CommentFieldset($em);
                     return $fieldset;
                 }
             )

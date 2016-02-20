@@ -82,6 +82,16 @@ class PostRepository extends EntityRepository
         return $paginator;
     }
 
+    public function getAllOrderByTitle()
+    {
+        $queryBuilder = $this
+                            ->createQueryBuilder('p')
+                            ->orderBy('p.title','ASC')
+                            ->getQuery()
+                            ->getResult();
+        return $queryBuilder;
+    }
+
 }
 
 ?>

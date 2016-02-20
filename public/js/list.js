@@ -20,6 +20,16 @@ $(document).ready(function($) {
         }
     });
 
+    $('.deleteComment').click(function(e) {
+        var title = $(this).data('id');
+
+        e.preventDefault();
+        if (window.confirm("Etes-vous sur de vouloir supprimer ce commentaire ?")) {
+            location.href = this.href;
+           var href = $(this).attr("href");
+        }
+    });
+
     $("#batchActions").submit(function(e) {
     
     // var val = $("input[type=submit][clicked=true]").val();

@@ -17,7 +17,7 @@ class CategoryFieldset extends Fieldset implements InputFilterProviderInterface
         parent::__construct('category');
 
         $this->entityManager = $entityManager;
-        $this->setHydrator(new DoctrineHydrator($entityManager, 'Admin\Entity\Category'));
+        $this->setHydrator(new DoctrineHydrator($entityManager, 'Blog\Entity\Category'));
 
         $this->add(array(
             'name' => 'label',

@@ -10,64 +10,48 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
 use Blog\Entity\Category;
 
-class PostFilterFieldset extends Fieldset implements InputFilterProviderInterface
+class CommentFieldset extends Fieldset implements InputFilterProviderInterface
 {
     private $entityManager;
     public function __construct(EntityManager $entityManager)
     {
-        parent::__construct('filter-post');
+        parent::__construct('comment');
 
         $this->entityManager = $entityManager;
         $this->setHydrator(new DoctrineHydrator($entityManager, 'Blog\Entity\Post'));
 
         $this->add(array(
-            'name' => 'title',
-            'type' => 'Text',
+            'name' => 'comment',
+            'type' => 'textarea',
             'options' => array(
-            'label' => 'Titre',
+                'label' => 'Commentaire',
             ),
-            
         ));
 
         $this->add(
             array(
-
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
-                'name' => 'category',
+                'name' => 'post',
 
                 'options' => array(
 
                         'object_manager' => $entityManager,
-                        'label' => 'Catégorie',
-                        'target_class'   => 'Blog\Entity\Category',
-                        'display_empty_item' => true,
-                        'empty_item_label'   => '',
-                        'property'       => 'label',
+                        'label' => 'Article',
+                        'target_class'   => 'Blog\Entity\Post',
+                        'property'       => 'title',
                         'is_method' => true,
                         'find_method'        => array(
-                                'name'   => 'getAllOrderBylabel',
+                            'name'   => 'getAllOrderByTitle',
                         ),
                 ),
-                'allow_empty'  => true,
-                'required'     => false,
+                'allow_empty'  => false,
                 'attributes' => array(
-                        'id' => 'category-list',
+                        'id' => 'post-list',
                         'multiple' => false,
                 )
             )
-         );
+        );
      
-        $this->add(array(
-             'type' => 'Zend\Form\Element\Select',
-             'name' => 'deleted',
-             'options' => array(
-                     'label' => 'Publier ?',
-                     'value_options' => array(
-                             '0' => 'oui',
-                             '1' => 'non',
-                     ),
-             )
-        ));
     }
 
     /**
@@ -80,15 +64,13 @@ class PostFilterFieldset extends Fieldset implements InputFilterProviderInterfac
     {
         return array(
             
-            'title' => array(
-                'required' => false,
+            'comment' => array(
+                'required' => true,
             ),
-            'category' => array(
-                'required' => false,
+            'post' => array(
+                'required' => true,
             ),
-            'deleted' => array(
-                'required' => false,
-            ),
+           
         );
     }
 }

@@ -90,6 +90,8 @@ class AdminCategoryController extends AbstractActionController
                 // Le user a cliqué sur Enregistrer et retourner à la liste
                 if($submit)
                     return $this->redirect()->toRoute('admin_list_category');
+                else
+                    return $this->redirect()->toRoute('admin_new_category');
             }
         }
         return new ViewModel(array(
@@ -119,7 +121,7 @@ class AdminCategoryController extends AbstractActionController
         {
             return $this->redirect()->toRoute('admin_list_category');
         }
-        
+
         $formManager = $this->serviceLocator->get('FormElementManager');
         $form = $formManager->get('Admin\Form\Form\CreateCategoryForm');
 
@@ -142,6 +144,8 @@ class AdminCategoryController extends AbstractActionController
                 // Le user a cliqué sur Enregistrer et retourner à la liste
                 if($submit)
                     return $this->redirect()->toRoute('admin_list_category');
+                else
+                    return $this->redirect()->toRoute('admin_edit_category',array("id" => $category->getId()));
             }
         }
         return new ViewModel(array(

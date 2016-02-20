@@ -5,12 +5,12 @@ namespace Blog\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /** 
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Blog\Repository\CommentRepository")
  * @ORM\Table(name="comment")
+ * @ORM\HasLifecycleCallbacks
  */
 class Comment
 {
-
 	/**
 	 * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -20,10 +20,10 @@ class Comment
 	private $id;
 
 	/**
-	 * @ORM\Column(name="user_email", type="string")
+	 * @ORM\Column(name="user_email", type="string", nullable = true)
 	 * @var string user email
 	 */
-	private $userEmail; 
+	private $userEmail;
 
 	/**
 	 * @ORM\Column(name="comment",type="text") 
@@ -43,12 +43,6 @@ class Comment
 	 */
 	private $updatedAt; 
 
-	/**
-	 * @ORM\Column(name="deleted",type="boolean")
-	 * @var boolean deleted state
-	 */
-	private $deleted; 
-
     /**
      * @ORM\ManyToOne(targetEntity = "Post", inversedBy = "comments")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
@@ -59,6 +53,7 @@ class Comment
     {
         # code...
     }
+
     /**
      * Gets the value of id.
      *
@@ -179,28 +174,47 @@ class Comment
         return $this;
     }
 
-    /**
-     * Gets the value of deleted.
+     /**
+     * Gets the value of post.
      *
-     * @return boolean deleted state
+     * @return mixed
      */
-    public function getDeleted()
+    public function getPost()
     {
-        return $this->deleted;
+        return $this->post;
     }
 
     /**
-     * Sets the value of deleted.
+     * Sets the value of post.
      *
-     * @param boolean deleted state $deleted 
+     * @param mixed $post the post
      *
      * @return self
      */
-    public function setDeleted($deleted)
+    public function setPost($post)
     {
-        $this->deleted = $deleted;
+        $this->post = $post;
 
         return $this;
+    }
+
+     /** 
+     * @ORM\PrePersist
+     * @return void
+     */
+    public function prePersist() {
+
+        $this->setCreatedAt(new \DateTime());
+        $this->setUpdatedAt(new \DateTime());
+    }
+
+    /** 
+     * @ORM\PreUpdate
+     * @return void
+     */
+    public function preUpdate() {
+        $this->setUpdatedAt(new \DateTime());
+
     }
 }
 

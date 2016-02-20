@@ -479,4 +479,9 @@ class Post {
         
         return "./public/upload/posts/".$this->photo;
     }
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

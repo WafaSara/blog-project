@@ -85,6 +85,7 @@ return array(
               ),
           ),
           // END ROUTES FOR CATEGORY
+        
           // ROUTES FOR POST
           'admin_list_post' => array(
               'type' => 'Segment',
@@ -150,6 +151,72 @@ return array(
             ),
           ),
           // END ROUTES FOR POST
+          
+          // ROUTES FOR COMMENT
+          'admin_list_comment' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/comment[/:page][/:reset]',
+                  'constraints' => array(
+                    'page'     => '\d+',
+                    'reset'     => '\d+',
+
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminComment',
+                      'action'     => 'list',
+                  ),
+              ),
+            ),
+
+            'admin_edit_comment' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/comment/edit/:id',
+                  'constraints' => array(
+                    'id'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminComment',
+                      'action'     => 'edit',
+                  ),
+              ),
+            ),
+
+            'admin_delete_comment' => array(
+              'type' => 'Segment',
+              'options' => array(
+                  'route' => '/dashboard/comment/delete/:id',
+                  'constraints' => array(
+                    'id'     => '\d+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'AdminComment',
+                      'action'     => 'delete',
+                  ),
+              ),
+            ),
+           'admin_new_comment' => array(
+              'type' => 'Literal',
+              'options' => array(
+                  'route' => '/dashboard/comment/new',
+                  'defaults' => array(
+                      'controller' => 'AdminComment',
+                      'action'     => 'new',
+                  ),
+              ),
+          ),
+          'admin_comment_delete_groups' => array(
+            'type' => 'Literal',
+            'options' => array(
+                'route' => '/dashboard/comment/delete/groups',
+                'defaults' => array(
+                    'controller' => 'AdminComment',
+                    'action'     => 'deleteGroups',
+                ),
+            ),
+          ),
+          // END ROUTES FOR COMMENT
         ),
      ),
 

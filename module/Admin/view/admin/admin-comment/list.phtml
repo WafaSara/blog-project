@@ -1,3 +1,66 @@
-<section>
-  <h1>page Comment</h1>
-</section>
+<h2>Liste des commentaires</h2>
+
+<div class=”row”>
+  <div class="col-lg-9">
+
+<a href="<?php echo $this->url('admin_new_comment'); ?>">Ajouter un nouveau commentaire</a>
+
+<form action="<?php echo $this->url('admin_comment_delete_groups'); ?>" method="POST" id="batchActions">
+<table class="table">
+  <thead>
+    <tr>
+      <th><input type="checkbox" onClick="toggleToDelete(this)"></th>
+      <th>Email de l'utilisateur</th>
+      <th>Contenu</th>
+      <th>Créé le</th>
+      <th>Modifié le </th>
+      <th>Titre de l'article</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <?php foreach($comments as $oneComment): ?>
+    <tr>
+      <td><input type="checkbox" name="toDelete[]" value="<?php echo $oneComment->getId(); ?>"></td>
+      <th><?php echo $oneComment->getUserEmail();?></th>
+      <th><?php echo $oneComment->getComment(); ?></th>
+      <th><?php echo $this->dateFormat($oneComment->getCreatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?></th>
+      <th><?php echo $this->dateFormat($oneComment->getUpdatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?> </th>
+      <th><?php echo $oneComment->getPost(); ?></th>
+      <td>
+        <a href="<?php echo $this->url('admin_edit_comment',array('id' => $oneComment->getId())) ?>" class="glyphicon glyphicon-edit">modifier</a> |
+        <a href="<?php echo $this->url('admin_delete_comment',array('id' => $oneComment->getId())) ?>" class="deleteComment glyphicon glyphicon-remove"> supprimer</a>
+      </td>
+    </tr>
+  <?php endforeach; ?>
+</table>
+
+<div class="pagination">
+    pour la Sélection: <input type="submit" name="supprimer" value="supprimer" class="btn btn-danger">
+</div>
+</form>
+<?php
+ // add at the end of the file after the table
+ echo $this->paginationControl(
+     // the paginator object
+     $comments,
+     // the scrolling style
+     'sliding',
+     // the partial to use to render the control
+     'partial/paginator.phtml',
+     // the route to link to when a user clicks a control link
+     array(
+         'route' => 'admin_list_comment'
+     )
+ );
+ ?>
+ </div>
+ <!-- Bloc filtre -->
+  <div class="col-lg-3">
+  <h2>Filtrer</h2>
+
+    
+  </div>
+
+ </div>
+

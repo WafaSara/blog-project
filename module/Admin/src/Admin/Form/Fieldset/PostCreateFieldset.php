@@ -18,7 +18,7 @@ class PostCreateFieldset extends Fieldset implements InputFilterProviderInterfac
         parent::__construct('post');
 
         $this->entityManager = $entityManager;
-        $this->setHydrator(new DoctrineHydrator($entityManager, 'Admin\Entity\Post'));
+        $this->setHydrator(new DoctrineHydrator($entityManager, 'Blog\Entity\Post'));
 
         $this->add(array(
             'name' => 'title',

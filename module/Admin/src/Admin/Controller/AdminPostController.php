@@ -165,6 +165,8 @@ class AdminPostController extends AbstractActionController
                 // Le user a cliqué sur Enregistrer et retourner à la liste
                 if($submit)
                     return $this->redirect()->toRoute('admin_list_post');
+                else
+                    return $this->redirect()->toRoute('admin_new_post');
             }
         }
         return new ViewModel(array(
