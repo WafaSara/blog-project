@@ -55,9 +55,9 @@ class AdminCommentController extends AbstractActionController
         if($request->isPost() == false)
         {
             if(empty($tabFiltreSession->filtre))
-                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,10,$tabFiltre);
+                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,20,$tabFiltre);
             else // on filtre avec la session
-                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,10,$tabFiltreSession->filtre);
+                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,20,$tabFiltreSession->filtre);
         }
         else // on filtre
         {
@@ -71,7 +71,7 @@ class AdminCommentController extends AbstractActionController
                 $tabFiltre['post'] = $data->getPost();
                 // $tabFiltre['category'] = $data->getCategory();
 
-                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,10,$tabFiltre);
+                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,20,$tabFiltre);
 
                 $tabFiltreSession->filtre = $tabFiltre;
             }

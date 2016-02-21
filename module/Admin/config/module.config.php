@@ -35,7 +35,7 @@ return array(
             'admin_list_category' => array(
               'type' => 'Segment',
               'options' => array(
-                  'route' => '/dashboard/category[/:page]',
+                  'route' => '/dashboard/category[/:page][/:reset]',
                   'constraints' => array(
                     'page'     => '\d+',
                   ),

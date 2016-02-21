@@ -1,26 +1,30 @@
 <h2>Liste des Categories</h2>
-
+<div class=”row”>
+  <div class="col-lg-9">
  <a href="<?php echo $this->url('admin_new_category'); ?>">Ajouter une catégorie</a>
-<table class="table">
-    <thead>
+<?php if ($categorys->getTotalItemCount() == 0): ?>
+  <h3>Aucun commentaires trouvés</h3>
+<?php else: ?>
+  <table class="table">
+      <thead>
+      <tr>
+        <th>Nom de la catégorie</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
 
-    <tr>
-      <th>Nom de la catégorie</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-
-  <?php foreach($categorys as $oneCategory): ?>
-    <tr>
-      <td><?php echo $oneCategory->getLabel(); ?></td>
-      
-      <td>
-        <a href="<?php echo $this->url('admin_edit_category',array('id' => $oneCategory->getId())) ?>" class="glyphicon glyphicon-edit"> modifier</a> |
-        <a href="<?php echo $this->url('admin_delete_category',array('id' => $oneCategory->getId())) ?>" data-id="<?php echo $oneCategory->getLabel(); ?>" class="deleteCategory glyphicon glyphicon-remove"> supprimer</a>
-      </td>
-    </tr>
-  <?php endforeach; ?>
-</table>
+    <?php foreach($categorys as $oneCategory): ?>
+      <tr>
+        <td><?php echo $oneCategory->getLabel(); ?></td>
+        
+        <td>
+          <a href="<?php echo $this->url('admin_edit_category',array('id' => $oneCategory->getId())) ?>" class="glyphicon glyphicon-edit"> modifier</a> |
+          <a href="<?php echo $this->url('admin_delete_category',array('id' => $oneCategory->getId())) ?>" data-id="<?php echo $oneCategory->getLabel(); ?>" class="deleteCategory glyphicon glyphicon-remove"> supprimer</a>
+        </td>
+      </tr>
+    <?php endforeach; ?>
+  </table>
+<?php endif; ?>
 
 <?php
  // add at the end of the file after the table
@@ -37,5 +41,30 @@
      )
  );
  ?>
+ </div>
+<!-- Bloc filtre -->
+  <div class="col-lg-3">
+    <h2>Filtrer</h2>
 
+    <?php 
 
+      $form->setAttribute('action', $this->url('admin_list_category'))
+            ->prepare();
+
+      echo $this->form()->openTag($form);
+
+      echo $this->formHidden($form->get('csrf'));
+
+      $category = $form->get('category');
+
+      echo $this->formRow($category->get('label')) ."<br>"."<br>";
+
+      echo $this->formElement($form->get('submit'))."<br>"."<br>";?>
+
+      <a href="<?php echo $this->url("admin_list_category",array("page" => 1, "reset" => 1)); ?>">Annuler les filtres</a>
+
+      <?php echo $this->form()->closeTag();
+    ?>
+
+  </div>
+</div>

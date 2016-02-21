@@ -15,11 +15,17 @@ class CategoryRepository extends EntityRepository
      * @param  integer $limit nb de résultat par page
      * @return Zend\Paginator\Paginator
      */
-    public function getList($numPage,$limit = 20)
+    public function getList($numPage,$limit = 20, $tabFiltre)
     {
-        $queryBuilder = $this
-                            ->createQueryBuilder('c')
-                            ->orderBy('c.label','ASC');
+        $queryBuilder = $this->createQueryBuilder('c');
+
+        if(!empty($tabFiltre['label']))
+        {
+            $queryBuilder = $queryBuilder->andWhere('c.label LIKE :label')
+                                        ->setParameter('label',"%".$tabFiltre['label']."%");
+        }
+
+        $queryBuilder = $queryBuilder->orderBy('c.label','ASC');
 
         $ORMPaginator     = new ORMPaginator($queryBuilder->getQuery(), false);
         $paginatorAdapter = new DoctrinePaginator($ORMPaginator);
