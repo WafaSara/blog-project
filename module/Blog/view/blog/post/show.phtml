@@ -12,10 +12,11 @@
         </p>
         <hr>
         <!-- Date/Time -->
-        <p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $post->getUpdatedAt()->format('l d F Y'); ?></p>
+        <p><span class="glyphicon glyphicon-time"></span> 
+        Posté le <?php echo $this->dateFormat($post->getCreatedAt(), IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM, "fr_FR"); ?></p>
         <hr>
         <!-- Preview Image -->
-        <img class="img-responsive" src="<?php echo $this->basePath($post->getWebPath()) ?>" alt="<?php echo $post->getTitle() ?>">
+        <img class="img-responsive big-image" src="<?php echo $this->basePath($post->getWebPath()) ?>" alt="<?php echo $post->getTitle() ?>">
         
         <hr>
         <!-- Post Content -->

@@ -16,9 +16,10 @@
                 <p class="lead">
                     écrit par <?php echo $onePost->getAuthor()->getUsername(); ?>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posté le <?php echo $onePost->getUpdatedAt()->format('l d F Y'); ?></p>
+                <p><span class="glyphicon glyphicon-time"></span> 
+                Posté le <?php echo $this->dateFormat($onePost->getCreatedAt(), IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM, "fr_FR"); ?></p>
                 <hr>
-                <img class="img-responsive" src="<?php echo $this->basePath($onePost->getWebPath()) ?>" alt="<?php echo $onePost->getTitle() ?>">
+                <img class="img-responsive big-image" src="<?php echo $this->basePath($onePost->getWebPath()) ?>" alt="<?php echo $onePost->getTitle() ?>">
                 
                 <hr>
                 <p><?php echo substr($onePost->getContent(),0,100)."..."; ?></p>
