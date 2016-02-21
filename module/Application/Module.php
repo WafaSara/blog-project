@@ -16,6 +16,8 @@ use Admin\Form\Fieldset\CategoryFieldset;
 use Admin\Form\Fieldset\PostCreateFieldset;
 use Admin\Form\Fieldset\PostFilterFieldset;
 use Admin\Form\Fieldset\CommentFieldset;
+use Admin\Form\Fieldset\CommentFilterFieldset;
+
 
 class Module implements FormElementProviderInterface
 {
@@ -44,10 +46,16 @@ class Module implements FormElementProviderInterface
                     return $fieldset;
                 },
                 'CommentFieldset' => function($sm) {
-                    // die('ok');
                     $serviceLocator = $sm->getServiceLocator();
                     $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
                     $fieldset = new CommentFieldset($em);
+                    return $fieldset;
+                },
+                'CommentFilterFieldset' => function($sm) {
+
+                    $serviceLocator = $sm->getServiceLocator();
+                    $em = $serviceLocator->get('Doctrine\ORM\EntityManager');
+                    $fieldset = new CommentFilterFieldset($em);
                     return $fieldset;
                 }
             )

@@ -15,11 +15,17 @@ class CommentRepository extends EntityRepository
      * @param  integer $limit nb de résultat par page
      * @return Zend\Paginator\Paginator
      */
-    public function getList($numPage,$limit = 10)
+    public function getList($numPage,$limit = 10, $tabFiltre)
     {
-        $queryBuilder = $this
-                            ->createQueryBuilder('c')
-                            ->orderBy('c.updatedAt','DESC');
+        $queryBuilder = $this->createQueryBuilder('c');
+
+        if(!empty($tabFiltre['post']))
+        {
+            $queryBuilder = $queryBuilder->andWhere('c.post = :post')
+                                        ->setParameter('post',$tabFiltre['post']);
+        }
+
+        $queryBuilder = $queryBuilder->orderBy('c.updatedAt','DESC');
 
         $ORMPaginator     = new ORMPaginator($queryBuilder->getQuery(), false);
         $paginatorAdapter = new DoctrinePaginator($ORMPaginator);

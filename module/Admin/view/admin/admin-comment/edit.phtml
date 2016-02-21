@@ -1,0 +1,24 @@
+
+<h1> Edition commentaire</h1>
+
+<br>
+<?php 
+
+$form->setAttribute('action', $this->url('admin_edit_comment',array("id" => $comment->getId())))
+      ->prepare();
+echo $this->form()->openTag($form);
+
+echo $this->formHidden($form->get('csrf'));
+
+$comment = $form->get('comment');
+
+echo $this->formRow($comment->get('comment'));
+
+echo $this->formRow($comment->get('post'));
+
+echo $this->formElement($form->get('submit'));
+echo $this->formElement($form->get('submit-and-continue'));
+
+echo "<a href=".$this->url("admin_list_comment")." class='btn btn-default'>Retourner à la liste</a>";
+
+echo $this->form()->closeTag();

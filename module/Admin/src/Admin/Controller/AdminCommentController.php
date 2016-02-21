@@ -19,42 +19,72 @@ class AdminCommentController extends AbstractActionController
         $request = $this->getRequest();
         $pageParam = $this->params('page');
         $pageSession = new Container('pageComment');
-        
+        $tabFiltreSession = new Container('tabFiltreCommentSession');
+
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        // initialisation du tableau de filtre
+        $tabFiltre['post'] = null;
+        // $tabFiltre['category'] = null;
 
         $reset = $this->params('reset');
         if(!empty($reset))
         {
-            // $monNamespace = new Zend_Session_Namespace('monNamespace');
+            $tabFiltreSession->filtre = $tabFiltre;
+            $pageSession->page = 1;
         }
-        // récupération des filtres de sessions
        
         // le numéro de page on récupère celui reçut en param si y'en a un sinon celui en session
         $numPage = ($pageParam) ? $pageParam : $pageSession->page;
 
-        // si méthode post on met à jour les variables de sessions
-        if($request->isPost())
-        {
-           
-        }
         // créer le form de filtre
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Admin\Form\Form\FilterCommentForm');
+
+        
+        $comment = new Comment();
+
+        if($tabFiltreSession->filtre != null)
+        {
+            $comment->setPost($tabFiltreSession->filtre['post']);
+            // $post->setCategory($tabFiltreSession->filtre['category']);
+        }
+
+        $form->bind($comment);
 
         if($request->isPost() == false)
         {
-            $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage);
+            if(empty($tabFiltreSession->filtre))
+                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,10,$tabFiltre);
+            else // on filtre avec la session
+                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,10,$tabFiltreSession->filtre);
         }
         else // on filtre
         {
+            $form->setData($request->getPost());
 
+            if ($form->isValid()) {
+                
+                $data = $form->getData();
+                $tabFiltre = array();
+
+                $tabFiltre['post'] = $data->getPost();
+                // $tabFiltre['category'] = $data->getCategory();
+
+                $comments = $em->getRepository('Blog\Entity\Comment')->getList($numPage,10,$tabFiltre);
+
+                $tabFiltreSession->filtre = $tabFiltre;
+            }
         }
-        // dans le cas ou on a pas de page en paramètre on la met a 1
-        $numPage = ($pageParam) ? $pageParam : '1';
 
         // On écrase la variable de session
         if($numPage)
             $pageSession->page = $numPage;
 
-        return new ViewModel(array("comments" => $comments));
+        return new ViewModel(array(
+            "comments" => $comments,
+            "form" => $form
+        ));
     }
 
     public function newAction()
@@ -104,14 +134,54 @@ class AdminCommentController extends AbstractActionController
         ));
     }
 
-    /**
-     * edit a a comment by id
-     * @param  int $id
-     * @return
-     */
-    public function editAction($id)
+    public function editAction()
     {
-      # code...
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
+            return $this->redirect()->toRoute('home');
+        }
+
+        $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
+
+        $id = $this->params('id');
+
+        $comment = $em->getRepository('Blog\Entity\Comment')->find($id);
+
+        if(!$comment)
+        {
+            return $this->redirect()->toRoute('admin_list_comment');
+        }
+
+        $formManager = $this->serviceLocator->get('FormElementManager');
+        $form = $formManager->get('Admin\Form\Form\CreateCommentForm');
+
+        $request = $this->getRequest();
+
+        $form->bind($comment);
+      
+        if ($request->isPost()) {
+            $form->setData($request->getPost());
+            if ($form->isValid()) {
+                $submit = $request->getPost('submit');
+
+                $comment = $form->getData();
+                
+                $em->flush();
+
+                $this->flashMessenger()
+                   ->setNamespace('success')
+                   ->addMessage('Modification réussi');
+                // Le user a cliqué sur Enregistrer et retourner à la liste
+                if($submit)
+                    return $this->redirect()->toRoute('admin_list_comment');
+                else
+                    return $this->redirect()->toRoute('admin_edit_comment',array("id" => $comment->getId()));
+            }
+        }
+        return new ViewModel(array(
+            'form'    => $form,
+            'flashMessages' => $this->flashMessenger()->getMessages(),
+            'comment' => $comment
+        ));
     }
 
     public function deleteAction()

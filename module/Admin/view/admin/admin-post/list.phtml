@@ -5,6 +5,9 @@
 
 
  <a href="<?php echo $this->url('admin_new_post'); ?>">Ajouter un nouvel article</a>
+<?php if ($posts->getTotalItemCount() == 0): ?>
+    <h3>Aucun commentaires trouvés</h3>
+<?php else: ?>
 
 <form action="<?php echo $this->url('admin_post_delete_groups'); ?>" method="POST" id="batchActions">
 <table class="table">
@@ -45,6 +48,8 @@
     pour la Sélection: <input type="submit" name="supprimer" value="supprimer" class="btn btn-danger"><input type="submit" name="masquer" value="Publier / Ne plus publier " class="btn btn-info">
 </div>
 </form>
+<?php endif; ?>
+
 <?php
  // add at the end of the file after the table
  echo $this->paginationControl(

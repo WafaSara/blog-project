@@ -57,13 +57,13 @@ class PostRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('p');
 
-        if($tabFiltre['title'] != null)
+        if(!empty($tabFiltre['title']))
         {
             $queryBuilder = $queryBuilder->andWhere('p.title LIKE :title')
                                         ->setParameter('title',"%".$tabFiltre['title']."%");
         }
 
-        if($tabFiltre['category'] != null)
+        if(!empty($tabFiltre['category']))
         {
             $queryBuilder = $queryBuilder->andWhere('p.category = :category')
                                         ->setParameter('category',$tabFiltre['category']);
@@ -92,6 +92,17 @@ class PostRepository extends EntityRepository
         return $queryBuilder;
     }
 
+    public function getOpenOrderByTitle()
+    {
+        $queryBuilder = $this
+                            ->createQueryBuilder('p')
+                            ->where('p.deleted = :deleted')
+                            ->setParameter('deleted' , "0")
+                            ->orderBy('p.title','ASC')
+                            ->getQuery()
+                            ->getResult();
+        return $queryBuilder;
+    }
 }
 
 ?>

@@ -2,56 +2,48 @@
 
 namespace Admin\Form\Fieldset;
 
-use Blog\Entity\Post;
+use Blog\Entity\Comment;
 use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManager;
-use Blog\Entity\Category;
 
-class CommentFieldset extends Fieldset implements InputFilterProviderInterface
+class CommentFilterFieldset extends Fieldset implements InputFilterProviderInterface
 {
     private $entityManager;
     public function __construct(EntityManager $entityManager)
     {
-        parent::__construct('comment');
+        parent::__construct('filter-comment');
 
         $this->entityManager = $entityManager;
-        $this->setHydrator(new DoctrineHydrator($entityManager, 'Blog\Entity\Post'));
-
-        $this->add(array(
-            'name' => 'comment',
-            'type' => 'textarea',
-            'options' => array(
-                'label' => 'Commentaire',
-            ),
-        ));
+        $this->setHydrator(new DoctrineHydrator($entityManager, 'Blog\Entity\Comment'));
 
         $this->add(
             array(
+
                 'type' => 'DoctrineModule\Form\Element\ObjectSelect',
                 'name' => 'post',
 
                 'options' => array(
-
                         'object_manager' => $entityManager,
                         'label' => 'Article',
                         'target_class'   => 'Blog\Entity\Post',
+                        'display_empty_item' => true,
+                        'empty_item_label'   => '',
                         'property'       => 'title',
                         'is_method' => true,
                         'find_method'        => array(
-                            'name'   => 'getOpenOrderByTitle',
+                                'name'   => 'getOpenOrderByTitle',
                         ),
                 ),
-                'allow_empty'  => false,
+                'allow_empty'  => true,
+                'required'     => false,
                 'attributes' => array(
                         'id' => 'post-list',
                         'multiple' => false,
                 )
             )
-        );
-     
+         );
     }
 
     /**
@@ -64,13 +56,9 @@ class CommentFieldset extends Fieldset implements InputFilterProviderInterface
     {
         return array(
             
-            'comment' => array(
-                'required' => true,
-            ),
             'post' => array(
-                'required' => true,
+                'required' => false,
             ),
-           
         );
     }
 }

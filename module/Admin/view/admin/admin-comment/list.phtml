@@ -5,6 +5,9 @@
 
 <a href="<?php echo $this->url('admin_new_comment'); ?>">Ajouter un nouveau commentaire</a>
 
+<?php if ($comments->getTotalItemCount() == 0): ?>
+    <h3>Aucun commentaires trouvés</h3>
+<?php else: ?>
 <form action="<?php echo $this->url('admin_comment_delete_groups'); ?>" method="POST" id="batchActions">
 <table class="table">
   <thead>
@@ -39,7 +42,9 @@
     pour la Sélection: <input type="submit" name="supprimer" value="supprimer" class="btn btn-danger">
 </div>
 </form>
+<?php endif; ?>
 <?php
+
  // add at the end of the file after the table
  echo $this->paginationControl(
      // the paginator object
@@ -57,9 +62,28 @@
  </div>
  <!-- Bloc filtre -->
   <div class="col-lg-3">
-  <h2>Filtrer</h2>
+    <h2>Filtrer</h2>
 
-    
+    <?php 
+
+      $form->setAttribute('action', $this->url('admin_list_comment'))
+            ->prepare();
+
+      echo $this->form()->openTag($form);
+
+      echo $this->formHidden($form->get('csrf'));
+
+      $comment = $form->get('comment');
+
+      echo $this->formRow($comment->get('post')) ."<br>"."<br>";
+
+      echo $this->formElement($form->get('submit'));?>
+
+      <a href="<?php echo $this->url("admin_list_comment",array("page" => 1, "reset" => 1)); ?>">Annuler les filtres</a>
+
+      <?php echo $this->form()->closeTag();
+    ?>
+
   </div>
 
  </div>

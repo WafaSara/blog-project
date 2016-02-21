@@ -107,7 +107,6 @@ class AdminCategoryController extends AbstractActionController
      */
     public function editAction()
     {
-
         if (!$this->zfcUserAuthentication()->hasIdentity()) {
             return $this->redirect()->toRoute('home');
         }

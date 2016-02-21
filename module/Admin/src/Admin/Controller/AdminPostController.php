@@ -21,7 +21,7 @@ class AdminPostController extends AbstractActionController
         $request = $this->getRequest();
         $pageParam = $this->params('page');
         $pageSession = new Container('pagePost');
-        $tabFiltreSession = new Container('tabFiltreSession');
+        $tabFiltreSession = new Container('tabFiltrePostSession');
 
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
 
@@ -59,10 +59,10 @@ class AdminPostController extends AbstractActionController
 
         if($request->isPost() == false)
         {
-            if(!empty($tabFiltreSession->filtre))
+            if(empty($tabFiltreSession->filtre))
                 $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage,10,$tabFiltre);
             else // on filtre avec la session
-                $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage,10,$tabFiltreSession);
+                $posts = $em->getRepository('Blog\Entity\Post')->getList($numPage,10,$tabFiltreSession->filtre);
         }
         else // on est en post, on filtre
         {
@@ -81,8 +81,6 @@ class AdminPostController extends AbstractActionController
                 $tabFiltreSession->filtre = $tabFiltre;
             }
         }
-        // dans le cas ou on a pas de page en paramètre on la met a 1
-        $numPage = ($pageParam) ? $pageParam : '1';
 
         // On écrase la variable de session
         if($numPage)
