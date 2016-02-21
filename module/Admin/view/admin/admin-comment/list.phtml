@@ -26,7 +26,7 @@
     <tr>
       <td><input type="checkbox" name="toDelete[]" value="<?php echo $oneComment->getId(); ?>"></td>
       <th><?php echo $oneComment->getUserEmail();?></th>
-      <th><?php echo $oneComment->getComment(); ?></th>
+      <th><?php echo substr($oneComment->getComment(),0,100)."..."; ?></th>
       <th><?php echo $this->dateFormat($oneComment->getCreatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?></th>
       <th><?php echo $this->dateFormat($oneComment->getUpdatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?> </th>
       <th><?php echo $oneComment->getPost(); ?></th>
