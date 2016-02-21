@@ -23,9 +23,13 @@ class CommentFieldset extends Fieldset implements InputFilterProviderInterface
         $this->add(array(
             'name' => 'comment',
             'type' => 'textarea',
+
             'options' => array(
                 'label' => 'Commentaire',
             ),
+            'attributes' => array(
+                'class' => "ckeditor",
+             ),
         ));
 
         $this->add(

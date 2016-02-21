@@ -46,7 +46,11 @@ $(document).ready(function($) {
     else
         alert("Veullez sélectionner un article");
         
-    // return false;
+    CKEDITOR.config.toolbar = [
+     
+    ] ;
+ 
+    $('.ckeditor').ckeditor(config);
 });
    
 });

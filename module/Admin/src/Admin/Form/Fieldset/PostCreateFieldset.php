@@ -33,9 +33,11 @@ class PostCreateFieldset extends Fieldset implements InputFilterProviderInterfac
             'name' => 'content',
             'type' => 'textarea',
             'options' => array(
-            'label' => 'Contenu',
+                'label' => 'Contenu',
             ),
-            
+            'attributes' => array(
+                'class' => "ckeditor",
+             ),
         ));
 
      /*   $this->add(array(
