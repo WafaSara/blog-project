@@ -10,7 +10,7 @@ return array(
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
 
-          'zfcuser' => array(
+            'zfcuser' => array(
                 'type' => 'Literal',
                 'priority' => 1000,
                 'options' => array(
@@ -32,8 +32,30 @@ return array(
                             ),
                         ),
                     ),
-            )),
-            'zfcuser-register' => array(
+                    'logout' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/logout',
+                            'defaults' => array(
+                                'controller' => 'zfcuser',
+                                'action'     => 'logout',
+                            ),
+                        ),
+                    ),
+
+                    'register' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/register',
+                            'defaults' => array(
+                                'controller' => 'zfcuser',
+                                'action'     => 'register',
+                            ),
+                        ),
+                    ),
+
+                )),
+           /* 'zfcuser-register' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/register',
@@ -42,8 +64,9 @@ return array(
                         'action'     => 'register',
                     ),
                 ),
-            ),
-             'zfcuser-authenticate' => array(
+            ),*/
+
+            'zfcuser-authenticate' => array(
                 'type' => 'Literal',
                 'options' => array(
                     'route' => '/authenticate',
@@ -53,16 +76,7 @@ return array(
                     ),
                 ),
             ),
-            'zfcuser-logout' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/logout',
-                    'defaults' => array(
-                        'controller' => 'zfcuser',
-                        'action'     => 'logout',
-                    ),
-                ),
-            ),
+            
             'zfcuser-changepassword' => array(
                 'type' => 'Literal',
                 'options' => array(

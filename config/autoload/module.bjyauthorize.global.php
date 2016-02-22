@@ -26,6 +26,7 @@ return array(
                 array('route' => 'contact', 'roles' => array('administrator', 'user', 'guest')),
                 array('route' => 'show_post', 'roles' => array('administrator', 'user', 'guest')),
                 array('route' => 'show_category', 'roles' => array('administrator', 'user', 'guest')),
+
                 array('route' => 'dashboard', 'roles' => array('administrator', 'user')),
                 array('route' => 'admin_list_category', 'roles' => array('administrator', 'user')),
                 array('route' => 'admin_edit_category', 'roles' => array('administrator', 'user')),
@@ -41,11 +42,16 @@ return array(
                 array('route' => 'admin_delete_comment', 'roles' => array('administrator', 'user')),
                 array('route' => 'admin_new_comment', 'roles' => array('administrator', 'user')),
                 array('route' => 'admin_comment_delete_groups', 'roles' => array('administrator', 'user')),
-                array('route' => 'zfcuser-logout', 'roles' => array('user', 'administrator')),
+
+                // array('route' => 'zfcuser-logout', 'roles' => array('user', 'administrator')),
                 array('route' => 'zfcuser-authenticate', 'roles' => array( 'guest', 'user', 'administrator')),
-                array('route' => 'zfcuser-register', 'roles' => array('guest', 'user', 'administrator')),
+                // array('route' => 'zfcuser-register', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'zfcuser', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'zfcuser/login', 'roles' => array('guest', 'user', 'administrator')),
+                array('route' => 'zfcuser/logout', 'roles' => array('guest', 'user', 'administrator')),
+                array('route' => 'zfcuser/register', 'roles' => array('guest', 'user', 'administrator')),
+
+
                 array('route' => 'user_forgot_password', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'user_change_password', 'roles' => array('guest', 'user', 'administrator')),
            )
