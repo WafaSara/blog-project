@@ -70,6 +70,7 @@
                         <?php echo $oneComment->getComment(); ?>
                     </div>
                 </div>
+                <hr>
             <?php endforeach ?>
             
         <?php else: ?>
@@ -139,10 +140,14 @@
 <script type="text/javascript">
 
     $(function(){
+  
+    config = [
+     
+    ] ;
+    $('.ckeditor').ckeditor();
 
     $('#refreshcaptcha').click(function() {
         var url = '<?php echo $this->url("refresh_captcha_ajax", array("action"=>"refreshCaptchaAjax")) ?>';
-        console.log(url);
 
         $.ajax({
             url: url, 

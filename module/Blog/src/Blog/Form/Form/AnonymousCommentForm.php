@@ -44,8 +44,7 @@ class AnonymousCommentForm extends Form implements InputFilterProviderInterface
                 'label' => 'Commentaire',
             ),
             'attributes' => array(
-                'class' => "big-image",
-                "rows" => "5"
+                'class' => "ckeditor",
             )
         ));
 
