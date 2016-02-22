@@ -46,7 +46,7 @@ $(document).ready(function($) {
     else
         alert("Veullez sélectionner un article");
         
-    CKEDITOR.config.toolbar = [
+    config = [
      
     ] ;
  

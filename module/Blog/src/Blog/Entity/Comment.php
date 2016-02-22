@@ -47,7 +47,12 @@ class Comment
      * @ORM\ManyToOne(targetEntity = "Post", inversedBy = "comments")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
-     private $post;
+    private $post;
+
+    /**
+     * @ORM\Column(name="anonymous", type="string", length=255, nullable = true)
+     */
+    private $anonymous;
 
     function __construct()
     {
@@ -215,6 +220,30 @@ class Comment
     public function preUpdate() {
         $this->setUpdatedAt(new \DateTime());
 
+    }
+
+     /**
+     * Gets the value of anonymous.
+     *
+     * @return mixed
+     */
+    public function getAnonymous()
+    {
+        return $this->anonymous;
+    }
+
+    /**
+     * Sets the value of anonymous.
+     *
+     * @param mixed $anonymous the anonymous
+     *
+     * @return self
+     */
+    public function setAnonymous($anonymous)
+    {
+        $this->anonymous = $anonymous;
+
+        return $this;
     }
 }
 

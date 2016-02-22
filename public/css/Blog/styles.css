@@ -383,3 +383,13 @@ body .demo-blog {
 .big-image {
   width: 100%;
 }
+
+div#spinner{
+  display:none;
+  width:100px;
+  height:100px;
+  position:fixed;
+  top:50%;
+  left:50%;
+  background:url(/img/ajax-loader-center.gif)
+}

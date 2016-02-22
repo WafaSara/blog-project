@@ -35,6 +35,20 @@ class CommentRepository extends EntityRepository
 
         return $paginator;
     }
+
+
+    public function getByPosts($post)
+    {
+        $queryBuilder = $this->createQueryBuilder('c');
+
+        $queryBuilder = $queryBuilder->andWhere('c.post = :post')
+                                    ->setParameter('post',$post)
+                                    ->orderBy('c.updatedAt','DESC')
+                                    ->getQuery()
+                                    ->getResult();
+        
+        return $queryBuilder;
+    }
 }
 
 ?>
