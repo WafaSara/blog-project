@@ -29,7 +29,7 @@ return array(
                         ),
                     ),
                 ),
-               
+
             ),
             // ROUTES FOR CATEGORY
             'admin_list_category' => array(
@@ -85,7 +85,7 @@ return array(
               ),
           ),
           // END ROUTES FOR CATEGORY
-        
+
           // ROUTES FOR POST
           'admin_list_post' => array(
               'type' => 'Segment',
@@ -151,7 +151,7 @@ return array(
             ),
           ),
           // END ROUTES FOR POST
-          
+
           // ROUTES FOR COMMENT
           'admin_list_comment' => array(
               'type' => 'Segment',
@@ -268,4 +268,5 @@ return array(
             )
         )
     ),
+
 );

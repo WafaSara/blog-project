@@ -7,7 +7,7 @@
                 <h1 class="page-header">
                     Les derniers articles
                 </h1>
-                
+
                 <?php foreach ($posts as $onePost): ?>
                 <!-- First Blog Post -->
                 <h2>
@@ -16,17 +16,17 @@
                 <p class="lead">
                     écrit par <?php echo $onePost->getAuthor()->getUsername(); ?>
                 </p>
-                <p><span class="glyphicon glyphicon-time"></span> 
-                Posté le <?php echo $this->dateFormat($onePost->getCreatedAt(), IntlDateFormatter::LONG, IntlDateFormatter::MEDIUM, "fr_FR"); ?></p>
+                <p><span class="glyphicon glyphicon-time"></span>
+                Posté le <?php echo $this->dateFormat($onePost->getCreatedAt(), \IntlDateFormatter::LONG, \IntlDateFormatter::MEDIUM, "fr_FR"); ?></p>
                 <hr>
                 <img class="img-responsive big-image" src="<?php echo $this->basePath($onePost->getWebPath()) ?>" alt="<?php echo $onePost->getTitle() ?>">
-                
+
                 <hr>
                 <p><?php echo substr($onePost->getContent(),0,100)."..."; ?></p>
                 <a class="btn btn-primary" href="<?php echo $this->url('show_post',array('id' => $onePost->getId())); ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
             <?php endforeach ?>
-              
+
 
                 <!-- Pager -->
             <!--     <ul class="pager">
@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-unstyled">
-                          
+
                     <?php foreach ($this->layout()->categorys as $oneCategory): ?>
                       <li><a href="<?php echo $this->url('show_category',array('slug' => $oneCategory->getSlug())); ?>"><?php echo $oneCategory->getLabel(); ?></a></li>
                     <?php endforeach ?>

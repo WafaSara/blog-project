@@ -64,10 +64,10 @@ class MyUser extends \User\Entity\MyUser implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'id', 'username', 'email', 'displayName', 'password', 'state');
+            return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'roles', 'id', 'username', 'email', 'displayName', 'password', 'state');
         }
 
-        return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'id', 'username', 'email', 'displayName', 'password', 'state');
+        return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'roles', 'id', 'username', 'email', 'displayName', 'password', 'state');
     }
 
     /**
@@ -259,6 +259,28 @@ class MyUser extends \User\Entity\MyUser implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMailCompany', array());
 
         return parent::getMailCompany();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getRoles()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getRoles', array());
+
+        return parent::getRoles();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addRole($role)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addRole', array($role));
+
+        return parent::addRole($role);
     }
 
     /**

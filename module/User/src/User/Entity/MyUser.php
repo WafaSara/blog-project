@@ -5,20 +5,21 @@ namespace User\Entity;
 use ZfcUser\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use BjyAuthorize\Provider\Role\ProviderInterface;
 
 /**
- * @ORM\Entity 
+ * @ORM\Entity
  * @ORM\Table(name="my_user")
  */
-class MyUser extends User
+class MyUser extends User implements ProviderInterface
 {
-    
+
     /**
      * @var $updateDate datetime
      * @ORM\Column(name="updated_at", type="datetime")
      */
     protected $updatedAt;
-    
+
     /**
      * @var $updateDate datetime
      * @ORM\Column(name="created_at", type="datetime")
@@ -40,12 +41,23 @@ class MyUser extends User
      */
     protected $mailCompany;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="User\Entity\Role")
+     * @ORM\JoinTable(name="user_role_linker",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     */
+    protected $roles;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
         $this->posts = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -68,7 +80,7 @@ class MyUser extends User
         return $this->updatedAt();
     }
 
-    
+
     /**
      * set creation date
      *
@@ -80,7 +92,7 @@ class MyUser extends User
     }
 
     /**
-     * set update date 
+     * set update date
      *
      * @return void
      **/
@@ -150,5 +162,27 @@ class MyUser extends User
         $this->mailCompany = $mailCompany;
 
         return $this;
+    }
+
+    /**
+     * Get role.
+     *
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles->getValues();
+    }
+
+    /**
+     * Add a role to the user.
+     *
+     * @param Role $role
+     *
+     * @return void
+     */
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
     }
 }

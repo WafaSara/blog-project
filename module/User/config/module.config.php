@@ -71,7 +71,7 @@ return array(
                         'controller' => 'zfcuser',
                         'action'     => 'changepassword',
                     ),
-                ),                        
+                ),
             ),
             'zfcuser-changeemail' => array(
                 'type' => 'Literal',
@@ -81,7 +81,7 @@ return array(
                         'controller' => 'zfcuser',
                         'action' => 'changeemail',
                     ),
-                ),                        
+                ),
             ),
             'user_login' => array(
                 'type'    => 'Literal',
