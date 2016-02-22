@@ -38,6 +38,8 @@
             ->prependFile($this->basePath('js/jquery.min.js'))
             ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath('js/front.js'))
+
         ; ?>
     <style> 
     #view-source {
@@ -76,7 +78,20 @@
 
         
   <div class="container">
-      
+      <?php 
+
+        $flash = $this->flashMessenger();
+          $flash->setMessageOpenFormat('<div%s>
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+              &times;
+          </button>
+          <div>')->setMessageCloseString('</div></div>');
+
+          echo $flash->render('error', array('alert', 'alert-dismissable', 'alert-danger'));
+          echo $flash->render('info', array('alert', 'alert-dismissable', 'alert-info'));
+          echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+          echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+       ?>
       <?php echo $this->content; ?>
 
       <footer class="mdl-mini-footer">

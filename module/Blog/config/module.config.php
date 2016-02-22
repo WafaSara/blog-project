@@ -38,6 +38,38 @@ return array(
                   ),
               ),
           ),
+          'generate_captcha' => array(
+              'type' => 'Zend\Mvc\Router\Http\Segment',
+              'options' => array(
+                  'route' => '/post/captcha/[:id]',
+                  'defaults' => array(
+                      'controller' => 'Post',
+                      'action'     => 'generate',
+                  ),
+              ),
+          ),
+          'refresh_captcha_ajax' => array(
+              'type' => 'Zend\Mvc\Router\Http\Segment',
+              'options' => array(
+                  'route' => '/post/refresh/captcha-ajax',
+                  'defaults' => array(
+                      'controller' => 'Post',
+                      'action'     => 'refreshCaptchaAjax',
+                  ),
+              ),
+          ),
+              /*      'refresh_captcha_ajax' => array(
+              'type' => 'Zend\Mvc\Router\Http\Segment',
+              'options' => array(
+                  'route' => '/post/refresh/captcha/:action',
+                  'constraints' => array(
+                    'action' => '\w+',
+                  ),
+                  'defaults' => array(
+                      'controller' => 'Post',
+                  ),
+              ),
+          ),*/
           // permet de filtrer les posts par catégories
           'show_category' => array(
               'type' => 'Zend\Mvc\Router\Http\Segment',
@@ -85,9 +117,12 @@ return array(
          // The following adds an entry pointing to the view directory
          // of the current module. Make sure your keys differ between modules
          // to ensure that they are not overwritten -- or simply omit the key!
-         'template_path_stack' => array(
-           'blog' => __DIR__ . '/../view',
-          ),
+        'template_path_stack' => array(
+          'blog' => __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+          'ViewJsonStrategy','Zend\View\Strategy\PhpRendererStrategy'
+        ),
      ),
     // Doctrine
     'doctrine' => array(
