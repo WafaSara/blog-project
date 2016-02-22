@@ -1,2 +1,68 @@
 <h1>Nous Contacter</h1>
 
+<?php 
+
+    $form = $this->form;
+    $form->setAttribute('action',
+                        $this->url('contact'));
+
+    $form->prepare();
+
+    echo $this->form()->openTag($form);
+    
+    echo "<div id='img-captcha'>";
+    echo $this->formRow($form->get('captcha'))."<br>"."<br>";
+    echo "</div>";
+
+    echo "<a id='refreshcaptcha' class='btn btn-info'>Rafraichir le captcha</a>"."<br>"."<br>";
+
+    echo $this->formRow($form->get('message'))."<br>"."<br>";
+    echo $this->formRow($form->get('email'))."<br>"."<br>";
+
+    echo $this->formSubmit($form->get('submit'))."<br>"."<br>";
+    echo $this->form()->closeTag();
+
+?>
+
+<div id="spinner">
+</div>
+
+<script type="text/javascript">
+
+    $(function(){
+  
+    config = [
+     
+    ] ;
+    $('.ckeditor').ckeditor();
+
+    $('#refreshcaptcha').click(function() {
+        var url = '<?php echo $this->url("refresh_captcha_ajax", array("action"=>"refreshCaptchaAjax")) ?>';
+
+        $.ajax({
+            url: url, 
+            dataType:'json', 
+            beforeSend: function(xhr) {
+                $("#spinner").show();
+            },
+            success: function(data) {
+                $("#img-captcha").find('img').attr('src', data.src)
+                $('input[type="hidden"][name="captcha[id]"').attr('value', data.id); 
+                $('input[name="captcha[id]').focus(); 
+
+            }
+        })
+        .done(function(data,textStatus) {
+            if(textStatus == "success")
+            {
+                $("#spinner").hide();
+            }
+        })
+        .fail(function() {
+            $("#spinner").hide();
+            alert("Le rechargement du captcha a échoué");
+        });
+        return false;
+    });
+});
+</script>

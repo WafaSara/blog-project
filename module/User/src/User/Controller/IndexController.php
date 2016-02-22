@@ -112,11 +112,11 @@ class  IndexController extends AbstractActionController
                 $mailService = $this->getServiceLocator()->get('goaliomailservice_message');
 
                 $admin = $em->getRepository('User\Entity\MyUser')->findOneByIsSuperAdmin(1);
+                $ok = false;
 
-               /* try {
-                    
+                try {
                     $html = $mailService->getRenderer()->render(
-                    $viewTemplate, $value
+                      $viewTemplate, $value
                     );
 
                     $htmlPart = new MimePart($html);
@@ -134,22 +134,23 @@ class  IndexController extends AbstractActionController
                         ->setTo($email);
 
                     $mailService->send($message);
+                    $ok = true;
                 } catch (\Exception $e) {
-                    $this->flashMessenger()
-                       ->setNamespace('error')
-                       ->addMessage('L\'envoie de mail a échoué');
-                }*/
-
-     /*           $message = $mailService->createTextMessage("soumare.iss@gmail.com", "isoumare@atixnet.fr", "reset-password", $viewTemplate,$value);
-                $message->getHeaders()->get('content-type')->setType('multipart/alternative');
-                $mailService->send($message);
-*/
-              }
+                }
+              } // fin du else (user saisit un mail valide)
               
+              if ($ok) {
+                  $this->flashMessenger()
+                     ->setNamespace('success')
+                     ->addMessage('Un mail vous a été envoyé afin de pouvoir changer votre mot de passe');
+              }
+              else
+              {
+                $this->flashMessenger()
+                     ->setNamespace('error')
+                     ->addMessage('L\'envoie de mail a échoué');
+              }
 
-              $this->flashMessenger()
-                 ->setNamespace('success')
-                 ->addMessage('Un mail vous a été envoyé afin de pouvoir changer votre email');
               // Le user a cliqué sur Enregistrer et retourner à la liste
               return $this->redirect()->toRoute('user_forgot_password');
           }
