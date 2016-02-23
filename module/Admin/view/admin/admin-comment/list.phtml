@@ -13,7 +13,7 @@
   <thead>
     <tr>
       <th><input type="checkbox" onClick="toggleToDelete(this)"></th>
-      <th>Email de l'utilisateur</th>
+      <th>Auteur</th>
       <th>Contenu</th>
       <th>Créé le</th>
       <th>Modifié le </th>
@@ -25,11 +25,11 @@
   <?php foreach($comments as $oneComment): ?>
     <tr>
       <td><input type="checkbox" name="toDelete[]" value="<?php echo $oneComment->getId(); ?>"></td>
-      <th><?php echo $oneComment->getUserEmail();?></th>
-      <th><?php echo substr($oneComment->getComment(),0,100)."..."; ?></th>
-      <th><?php echo $this->dateFormat($oneComment->getCreatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?></th>
-      <th><?php echo $this->dateFormat($oneComment->getUpdatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?> </th>
-      <th><?php echo $oneComment->getPost(); ?></th>
+      <td><?php echo $oneComment->getAnonymous();?></td>
+      <td><?php echo substr($oneComment->getComment(),0,100)."..."; ?></td>
+      <td><?php echo $this->dateFormat($oneComment->getCreatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?></td>
+      <td><?php echo $this->dateFormat($oneComment->getUpdatedAt(), IntlDateFormatter::SHORT, IntlDateFormatter::MEDIUM, "fr_FR"); ?> </td>
+      <td><?php echo $oneComment->getPost(); ?></td>
       <td>
         <a href="<?php echo $this->url('admin_edit_comment',array('id' => $oneComment->getId())) ?>" class="glyphicon glyphicon-edit">modifier</a> |
         <a href="<?php echo $this->url('admin_delete_comment',array('id' => $oneComment->getId())) ?>" class="deleteComment glyphicon glyphicon-remove"> supprimer</a>

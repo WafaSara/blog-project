@@ -46,13 +46,13 @@ $(document).ready(function($) {
     else
         alert("Veullez sélectionner un article");
         
+ 
+});
     config = [
      
     ] ;
  
-    $('.ckeditor').ckeditor(config);
-});
-   
+    $('.ckeditorAdmin').ckeditor();
 });
  function toggleToDelete(source) {
       var checkboxes = $("input[type='checkbox'][name='toDelete[]']");

@@ -113,7 +113,8 @@ class AdminCommentController extends AbstractActionController
 
                 $user = $auth->getIdentity();
 
-                $comment->setUserEmail($user->getEmail());
+                $comment->setAnonymous($user->getUsername());
+                $comment->setAuthor($user);
 
                 $em->persist($comment);
                 $em->flush();
@@ -121,6 +122,7 @@ class AdminCommentController extends AbstractActionController
                 $this->flashMessenger()
                    ->setNamespace('success')
                    ->addMessage('Ajout réussi');
+                
                 // Le user a cliqué sur Enregistrer et retourner à la liste
                 if($submit)
                     return $this->redirect()->toRoute('admin_list_comment');

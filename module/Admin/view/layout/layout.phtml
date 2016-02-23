@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Blog">
+    <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Dashboard</title>
+    <title>Bienvenue au sport blog</title>
 
-    <!-- Add to homescreen for Chrome on Android -->
+      <!-- Add to homescreen for Chrome on Android -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="images/android-desktop.png">
 
@@ -16,33 +16,36 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Material Design Lite">
-    <link rel="apple-touch-icon-precomposed" href="img/images/ios-desktop.png">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="img/images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#3372DF">
 
     <link rel="shortcut icon" href="/img/Dashboard/images/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
-    <!--
-    <link rel="canonical" href="http://www.example.com/">
-    -->
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="css/material.min.css">
-    <link rel="stylesheet" href="css/Dashboard/styles.css"> -->
-    <!-- Le styles -->
+    <!-- <link rel="stylesheet" href="$$hosted_libs_prefix$$/$$version$$/material.grey-orange.min.css">
+    <link rel="stylesheet" href="styles.css"> -->
+    
     <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/Dashboard/images/favicon.png'))
                     ->prependStylesheet($this->basePath('css/material.min.css'))
-                    ->prependStylesheet($this->basePath('css/Dashboard/styles.css'))
+                    ->prependStylesheet($this->basePath('css/Blog/styles.css'))
                     ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-                    ->prependStylesheet($this->basePath() . '/js/ckeditor/sample.css');
-                    ?>
+                    ->prependStylesheet($this->basePath() . '/js/ckeditor/sample.css'); ?>
+     <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath('js/bootstrap.min.js'))
+            ->prependFile($this->basePath('js/jquery.min.js'))
+            ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath('js/list.js'))
+            ->appendFile($this->basePath() . '/js/ckeditor/ckeditor.js')
+            ->appendFile($this->basePath() . '/js/ckeditor/adapters/jquery.js')
+            ->appendFile($this->basePath() . '/js/ckeditor/samples/js/sample.js');
 
-    <style>
+        ; ?>
+    <style> 
     #view-source {
       position: fixed;
       display: block;
@@ -56,73 +59,38 @@
 
   </head>
   <body>
-    <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Dashboard</span>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
-              <i class="material-icons">search</i>
-            </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search">
-              <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
-          </div>
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
-            <i class="material-icons">more_vert</i>
-          </button>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-            <li class="mdl-menu__item">A propos</li>
-            <li class="mdl-menu__item">Contacts</li>
-            <!-- <li class="mdl-menu__item">Legal information</li> -->
-            <li class="mdl-menu__item">Déconnexion</li>
-          </ul>
-        </div>
-      </header>
-      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <header class="demo-drawer-header">
-          <img src="img/Dashboard/images/user.jpg" class="demo-avatar">
-          <div class="demo-avatar-dropdown">
-            <span>w.bensahla@gmail.com</span>
-            <div class="mdl-layout-spacer"></div>
-            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-              <i class="material-icons" role="presentation">arrow_drop_down</i>
-              <span class="visuallyhidden">Accounts</span>
-            </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <!-- <li class="mdl-menu__item">hello@example.com</li>
-              <li class="mdl-menu__item">info@example.com</li> -->
-              <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
-              
-              <li class="mdl-menu__item"> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/changepassword') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Changer de mot de passe</a></li>
-              <li class="mdl-menu__item"> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/changeemail') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Changer d'adresse mail</a></li>
-              <li class="mdl-menu__item"> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/logout') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Déconnexion</a></li>
-
-            </ul>
-          </div>
-        </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-          <a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_post') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Articles</a>
-          <a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_category') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Catégories</a>
-          <a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_comment') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Commentaires</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Utilisateurs</a>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Poubelle</a>
-
-          <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/logout') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Déconnexion</a>
-          <a class="mdl-navigation__link" href="<?php echo $this->url('home') ?>">Voir mon site</a>
-          <a class="mdl-navigation__link" href=""> </a>
-          <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
-        </nav>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="<?php echo $this->url('home') ?>">Sport Blog</a>
       </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Catégories
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            
+          <?php foreach($categorys as $oneCategory): ?>
+              <li><a href="<?php echo $this->url('show_category',array('slug' => $oneCategory->getSlug() )); ?>"><?php echo $oneCategory->getLabel(); ?></a></li>
+          <?php endforeach ?>
+          </ul>
+        </li>
+        <li><a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_post') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Articles</a></li>
+        <li><a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_category') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Catégories</a></li>
+        <li><a class="mdl-navigation__link" href="<?php echo $this->url('admin_list_comment') ?>"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Commentaires</a></li>
+        <li><a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Utilisateurs</a></li>
+        <li><a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Poubelle</a></li>
+        <li><a href="<?php echo $this->url('contact'); ?>">Contact</a></li>
+        <li> <a class="mdl-navigation__link" href="<?php echo $this->url('zfcuser/logout') . ($this->redirect ? '?redirect='.$this->escapeUrl($this->redirect) : '') ?>">Déconnexion</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <main class="mdl-layout__content mdl-color--grey-100">
+        
+  <div class="container">
       <?php 
 
-          $flash = $this->flashMessenger();
+        $flash = $this->flashMessenger();
           $flash->setMessageOpenFormat('<div%s>
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
               &times;
@@ -133,27 +101,28 @@
           echo $flash->render('info', array('alert', 'alert-dismissable', 'alert-info'));
           echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
           echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+       ?>
+      <?php echo $this->content; ?>
 
-         ?>
-         <br><br>
-        <div class="mdl-grid">
-
-          <?php echo $this->content; ?>
+      <!-- <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer--left-section">
+          <button class="mdl-mini-footer--social-btn social-btn social-btn__twitter">
+            <span class="visuallyhidden">Twitter</span>
+          </button>
+          <button class="mdl-mini-footer--social-btn social-btn social-btn__blogger">
+            <span class="visuallyhidden">Facebook</span>
+          </button>
+          <button class="mdl-mini-footer--social-btn social-btn social-btn__gplus">
+            <span class="visuallyhidden">Google Plus</span>
+          </button>
         </div>
-      </main>
-    </div>
-    <!-- <script src="/js/material.min.js"></script> -->
-    <!-- Scripts -->
-    <?php echo $this->headScript()
-        ->prependFile($this->basePath('js/bootstrap.min.js'))
-        ->prependFile($this->basePath('js/jquery.min.js'))
-        ->prependFile($this->basePath('js/respond.min.js'), 'text/javascript', array('conditional' => 'lt IE 9',))
-        ->prependFile($this->basePath('js/html5shiv.min.js'),   'text/javascript', array('conditional' => 'lt IE 9',))
-        ->prependFile($this->basePath('js/material.min.js'))
-        ->appendFile($this->basePath('js/list.js'))
-        ->appendFile($this->basePath() . '/js/ckeditor/ckeditor.js')
-        ->appendFile($this->basePath() . '/js/ckeditor/adapters/jquery.js')
-        ->appendFile($this->basePath() . '/js/ckeditor/sample.js');
-    ; ?>
+        <div class="mdl-mini-footer--right-section">
+          <button class="mdl-mini-footer--social-btn social-btn__share">
+            <i class="material-icons" role="presentation">share</i>
+            <span class="visuallyhidden">share</span>
+          </button>
+        </div>
+      </footer> -->
+  </div>
   </body>
 </html>

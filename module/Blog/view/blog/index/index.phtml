@@ -23,7 +23,7 @@
 
                 <hr>
                 <p><?php echo substr($onePost->getContent(),0,100)."..."; ?></p>
-                <a class="btn btn-primary" href="<?php echo $this->url('show_post',array('id' => $onePost->getId())); ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="btn btn-primary" href="<?php echo $this->url('show_post',array('id' => $onePost->getId())); ?>">Lire plus <span class="glyphicon glyphicon-chevron-right"></span></a>
                 <hr>
             <?php endforeach ?>
 

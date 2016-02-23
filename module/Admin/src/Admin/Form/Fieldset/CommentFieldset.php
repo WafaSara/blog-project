@@ -28,7 +28,7 @@ class CommentFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'Commentaire',
             ),
             'attributes' => array(
-                'class' => "ckeditor",
+                'class' => "ckeditorAdmin",
              ),
         ));
 

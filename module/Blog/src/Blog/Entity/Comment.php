@@ -19,11 +19,11 @@ class Comment
 	 */
 	private $id;
 
-	/**
-	 * @ORM\Column(name="user_email", type="string", nullable = true)
-	 * @var string user email
-	 */
-	private $userEmail;
+    /**
+     * @ORM\ManyToOne(targetEntity="User\Entity\MyUser", inversedBy="comments")
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="user_id")
+     */
+	private $author;
 
 	/**
 	 * @ORM\Column(name="comment",type="text") 
@@ -84,25 +84,25 @@ class Comment
     }
 
     /**
-     * Gets the value of userEmail.
+     * Gets the value of author.
      *
-     * @return string user email
+     * @return string author
      */
-    public function getUserEmail()
+    public function getAuthor()
     {
-        return $this->userEmail;
+        return $this->author;
     }
 
     /**
-     * Sets the value of userEmail.
+     * Sets the value of author.
      *
-     * @param string user email $userEmail the user email
+     * @param string user email $author the user email
      *
      * @return self
      */
-    public function setUserEmail($userEmail)
+    public function setAuthor($author)
     {
-        $this->userEmail = $userEmail;
+        $this->author = $author;
 
         return $this;
     }

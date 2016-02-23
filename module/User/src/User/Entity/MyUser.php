@@ -51,6 +51,10 @@ class MyUser extends User implements ProviderInterface
      */
     protected $roles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Blog\Entity\Comment", mappedBy="author")
+     */
+    protected $comments;
 
     public function __construct()
     {
@@ -184,5 +188,10 @@ class MyUser extends User implements ProviderInterface
     public function addRole($role)
     {
         $this->roles[] = $role;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

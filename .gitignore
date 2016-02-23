@@ -12,3 +12,4 @@ vendor
 composer.phar
 public/upload/*
 data/DoctrineORMModule/Proxy/*
+data/captcha/*

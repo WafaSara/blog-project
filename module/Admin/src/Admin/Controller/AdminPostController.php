@@ -127,26 +127,28 @@ class AdminPostController extends AbstractActionController
 
                 // tableau contenant le nom dufichier['name'] uploader,[type], [tmp_name],[error],[size]
                 $filesDetails = $post->getFile();
-             
-                $httpadapter = new \Zend\File\Transfer\Adapter\Http(); 
-                $httpadapter->setDestination($post->getAbsoluteUploadDir());
-                
-                $path_parts = pathinfo($filesDetails['name']);
-                
-                $photo = sha1(uniqid(mt_rand(), true)).".".$path_parts['extension'];
+                // on a un fichier a upload
+                if($filesDetails['tmp_name'] != "")
+                {
+                    $httpadapter = new \Zend\File\Transfer\Adapter\Http(); 
+                    $httpadapter->setDestination($post->getAbsoluteUploadDir());
+                    
+                    $path_parts = pathinfo($filesDetails['name']);
+                    
+                    $photo = sha1(uniqid(mt_rand(), true)).".".$path_parts['extension'];
 
-                $newFilePath  = "./public/".$post->getUploadDir().'/'.$photo;
-                // modification du fichier uploader
-                $httpadapter->addFilter('\Zend\Filter\File\Rename', array('target' => $newFilePath,
-                    'overwrite' => false));
+                    $newFilePath  = "./public/".$post->getUploadDir().'/'.$photo;
+                    // modification du fichier uploader
+                    $httpadapter->addFilter('\Zend\Filter\File\Rename', array('target' => $newFilePath,
+                        'overwrite' => false));
 
-                // move uploaded file
-                $httpadapter->receive();
-             
-                $post->setPhoto($photo);
-                $post->setPhotoRealName($filesDetails['name']);
-                $post->setPhotoExtension($path_parts['extension']);
+                    // move uploaded file
+                    $httpadapter->receive();
 
+                    $post->setPhoto($photo);
+                    $post->setPhotoRealName($filesDetails['name']);
+                    $post->setPhotoExtension($path_parts['extension']);
+                }
                 $submit = $request->getPost('submit');
                 $auth = $this->getServiceLocator()->get('zfcuser_auth_service');
 

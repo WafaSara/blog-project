@@ -13,11 +13,11 @@ echo $this->formHidden($form->get('csrf'));
 
 $post = $form->get('post');
 
-echo $this->formRow($post->get('title'));
-echo $this->formRow($post->get('content'));
-echo $this->formRow($post->get('category'));
-echo $this->formRow($post->get('deleted'));
-echo $this->formRow($post->get('file'));
+echo $this->formRow($post->get('title'))."<br>"."<br>";
+echo $this->formRow($post->get('content'))."<br>"."<br>";
+echo $this->formRow($post->get('category'))."<br>"."<br>";
+echo $this->formRow($post->get('deleted'))."<br>"."<br>";
+echo $this->formRow($post->get('file'))."<br>"."<br>";
 
 
 echo $this->formElement($form->get('submit'));
