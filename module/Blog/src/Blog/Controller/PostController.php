@@ -5,6 +5,7 @@ namespace Blog\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Blog\Form\Form\AnonymousCommentForm;
+use Blog\Form\Form\UserCommentForm;
 use Blog\Entity\Comment;
 use Zend\View\Model\JsonModel;
 
@@ -27,7 +28,12 @@ class PostController extends AbstractActionController
 
         $post = $em->getRepository('Blog\Entity\Post')->find($idPost);
 
-        $form = new AnonymousCommentForm($this->getRequest()->getBaseUrl().'/post/captcha/');
+        if ($this->zfcUserAuthentication()->hasIdentity()) {
+            $form = new UserCommentForm($this->getRequest()->getBaseUrl().'/post/captcha/');
+        } else {
+            $form = new AnonymousCommentForm($this->getRequest()->getBaseUrl().'/post/captcha/');
+        }
+        
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -35,10 +41,21 @@ class PostController extends AbstractActionController
             $form->setData($request->getPost());
         
             if ($form->isValid()) {
+                $auth = $this->getServiceLocator()->get('zfcuser_auth_service');
+                $user = $auth->getIdentity();
+
                 $data = $form->getData();
                 $comment = new Comment();
                 $comment->setPost($post);
-                $comment->setAnonymous($data['anonymous']);
+                if (!$this->zfcUserAuthentication()->hasIdentity()) {
+                    $comment->setAnonymous($data['anonymous']);
+                }
+                else
+                {
+                    $comment->setAnonymous($user->getUsername());
+                    $comment->setAuthor($user);
+                }
+                
                 $comment->setComment($data['comment']);
                 $em->persist($comment);
                 $em->flush();

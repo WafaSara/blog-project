@@ -58,7 +58,7 @@ class AdminCategoryController extends AbstractActionController
         else // on filtre
         {
             $form->setData($request->getPost());
-            
+
              if ($form->isValid()) {
                 
                 $data = $form->getData();
@@ -89,10 +89,6 @@ class AdminCategoryController extends AbstractActionController
     public function newAction()
     {
         $em = $this->getServiceLocator()->get('doctrine.entitymanager.orm_default');
-
-        if (!$this->zfcUserAuthentication()->hasIdentity()) {
-            return $this->redirect()->toRoute('home');
-        }
 
         $formManager = $this->serviceLocator->get('FormElementManager');
         $form = $formManager->get('Admin\Form\Form\CreateCategoryForm');

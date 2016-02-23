@@ -50,8 +50,10 @@ return array(
                 array('route' => 'zfcuser/login', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'zfcuser/logout', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'zfcuser/register', 'roles' => array('guest', 'user', 'administrator')),
-
                 
+                array('route' => 'refresh_captcha_ajax', 'roles' => array('guest', 'user', 'administrator')),
+                
+                array('route' => 'generate_captcha', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'user_login', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'user_forgot_password', 'roles' => array('guest', 'user', 'administrator')),
                 array('route' => 'user_change_password', 'roles' => array('guest', 'user', 'administrator')),

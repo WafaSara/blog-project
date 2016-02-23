@@ -64,10 +64,10 @@ class MyUser extends \User\Entity\MyUser implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'roles', 'id', 'username', 'email', 'displayName', 'password', 'state');
+            return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'roles', 'comments', 'id', 'username', 'email', 'displayName', 'password', 'state');
         }
 
-        return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'roles', 'id', 'username', 'email', 'displayName', 'password', 'state');
+        return array('__isInitialized__', 'updatedAt', 'createdAt', 'posts', 'isSuperAdmin', 'mailCompany', 'roles', 'comments', 'id', 'username', 'email', 'displayName', 'password', 'state');
     }
 
     /**
@@ -281,6 +281,17 @@ class MyUser extends \User\Entity\MyUser implements \Doctrine\ORM\Proxy\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'addRole', array($role));
 
         return parent::addRole($role);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getComments()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getComments', array());
+
+        return parent::getComments();
     }
 
     /**
